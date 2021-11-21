@@ -1,0 +1,543 @@
+/* ========================================================================================================================== 
+	theme layout for Evolve Integrated Software Solutions
+   	Modify By : Lance John Zedric D. Bisenio III
+   	Date Modify : March 13, 2013
+	Position : Web Developer, Designer, Adviser etc..
+   	Title : Langitngit ng papag
+   ========================================================================================================================== */
+
+
+/* ========================================================================================================================== */
+/* Grid View CSS */
+/* ========================================================================================================================== */
+
+#Standard_Tbl {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px; border-collapse:collapse;
+}
+
+#Standard_Tbl tr td:nth-child(1), 
+#Standard_Tbl tr td:nth-child(3), 
+#Standard_Tbl tr td:nth-child(5) {
+	text-align:right;
+}
+
+#Standard_Tbl tr td:nth-child(2), 
+#Standard_Tbl tr td:nth-child(4), 
+#Standard_Tbl tr td:nth-child(6) {
+	text-align:left;
+}
+
+#TblReport {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px; border: solid 1px #333333;
+}
+
+#TblReport tr td:nth-child(1),
+#TblReport tr td:nth-child(2),
+#TblReport tr td:nth-child(3),
+#TblReport tr td:nth-child(4),
+#TblReport tr td:nth-child(5),
+#TblReport tr td:nth-child(6),
+#TblReport tr td:nth-child(7),
+#TblReport tr td:nth-child(8),
+#TblReport tr td:nth-child(9),
+#TblReport tr td:nth-child(10) {
+	border-right: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	padding:5px;
+}
+
+#TblReport th {
+	background: #337df8; padding: 5px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#TblReport tr th:nth-child(1),
+#TblReport tr th:nth-child(2),
+#TblReport tr th:nth-child(3),
+#TblReport tr th:nth-child(4),
+#TblReport tr th:nth-child(5),
+#TblReport tr th:nth-child(6),
+#TblReport tr th:nth-child(7),
+#TblReport tr th:nth-child(8),
+#TblReport tr th:nth-child(9),
+#TblReport tr th:nth-child(10) {
+	border-right: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	padding:5px;
+}
+
+#TblReport nth-child(even) {
+	background:#0000ff;
+}
+
+.TblReport_Select {
+	color: #FFFFFF;
+	background: #ff472f;
+}
+
+
+select {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px; 
+}
+
+input {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px; 
+    height:25px;
+    border: solid 1px #8B8B8A;
+    outline-style:none;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px; 
+}
+
+.GridButton {   
+    background: #f2f2f2;
+    cursor:pointer; padding:3px; padding-left:7px; padding-right:7px; 
+	text-shadow: 1px 1px 1px #e5e5e5; outline: none; 
+    font-weight:bold; color: #434343; 
+}
+
+.GridButton:hover {   
+    background: #e8e8e8;
+}
+.GridButton:active { 
+    color:#ffffff; 
+    background: #ABB9D3;
+    text-shadow: 0px 0px 0px #FFFFFF; outline: none;  
+}
+
+input.button, input.Button {  
+   /*padding-top:2px; padding-bottom:2px;*/
+   /*border-radius: 0px 0px 0px 0px;*/ 
+    /*-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    background: -moz-linear-gradient(top, #ffffff, #c2c2c2);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#c2c2c2));  */
+
+    background: #f2f2f2;  height:22px;
+    cursor:pointer; padding:3px; padding-left:7px; padding-right:7px; 
+	text-shadow: 1px 1px 1px #e5e5e5; outline: none; 
+    font-weight:bold; color: #434343; 
+}
+
+input.button:hover, input.Button:hover {  
+    /*background: -moz-linear-gradient(top, #ffffff, #eaeaea);*/
+    background: #e8e8e8; height:22px;
+}
+
+input.button:active, input.Button:active { 
+    color:#ffffff; height:22px;
+    background: #ABB9D3;
+    text-shadow: 0px 0px 0px #FFFFFF; outline: none;  
+}
+
+#cmdSave {
+    background: #00aeeb; height:22px;
+    cursor:pointer; padding:3px; padding-left:7px; padding-right:7px; 
+	text-shadow: 1px 1px 1px #0074eb; outline: none; 
+    font-weight:bold; color: #FFFFFF; 
+}
+
+#cmdSave:hover {
+    background: #1f77c8; 
+}
+
+input.tblButtonA {
+    padding-left:17px; font-weight:bold;
+    border:solid 0px #ec0a0a;
+    background:url(../images/add.png) no-repeat left center;
+    cursor:pointer; color:#4f4f4f;
+}
+input.tblButtonA:hover {
+    color:#ffffff;
+}
+input.tblButtonE {
+    padding-left:17px; font-weight:bold;
+    border:solid 0px #ec0a0a; vertical-align:middle;
+    background:url(../images/edit.png) no-repeat left center;
+    cursor:pointer; color:#4f4f4f;
+}
+input.tblButtonE:hover {
+    color:#ffffff;
+}
+input.tblButtonD {
+    padding-left:17px; font-weight:bold;
+    border:solid 0px #ec0a0a; vertical-align:middle;
+    background:url(../images/delete.png) no-repeat left center;
+    cursor:pointer; color:#4f4f4f;
+}
+input.tblButtonD:hover {
+    color:#ffffff;
+}
+/* 
+==========================================================================================================================
+GRID VIEW PROPERTIES
+==========================================================================================================================
+*/
+
+.mainGridView {
+	border: solid 1px #8B8B8A;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px; 
+}
+
+/*.mainGridView tr td. {
+    background:#29bbee;
+}*/
+ 
+.mainGridView tr td Table  {
+    height:20px; border-collapse:collapse; float:right;
+    margin-top:3px; margin-bottom:3px; margin-right:4px; 
+}
+
+.mainGridView tr td Table tbody tr td a {
+	border: solid 1px #8B8B8A; color:#8B8B8A;
+    padding-left:10px; padding-right:10px; 
+    padding-top:5px; padding-bottom:4px;
+    text-decoration:none; margin:0px; font-weight:bold;
+}
+
+.mainGridView tr td Table tbody tr td a:hover {
+    background-color:#e6e4e4;
+    color:#000;
+}
+
+.mainGridView tr td Table tbody tr td span {
+	border: solid 1px #000; color:#fff; 
+    background: #007feb;
+    padding-left:10px; padding-right:10px; 
+    padding-top:5px; padding-bottom:4px;
+    text-decoration:none; margin:0px; font-weight:bold;
+}
+
+.titleBar {
+	background-color: #FFFFFF; 
+	height: 27px; color: #028ebf;
+	text-align :center;
+	font-weight:bold;
+}
+
+.titleBarTop {
+	background-color: #00aeeb; 
+	height: 27px; color: #ffffff;
+	text-align :center;
+	font-weight:bold; 
+    
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 4px 4px 0px 0px;
+     
+}
+
+.odd { /*light color*/
+	background-color: #f9f9f9;
+	color: #000000;
+	height: 25px;
+	border-top: solid 1px #8b8b8a;
+}
+
+ 
+.even { /*Dark color*/
+	background-color: #ffffff;
+	color: #000000;
+	height: 25px;
+	border-top: solid 1px #8b8b8a;
+}
+
+.even selected{
+    background:#dce3f0; /*ABB9D3*/
+}
+
+.activeBar {
+	background-color: #e8e8e8;
+	/*font-family:Arial, Helvetica, sans-serif;*/
+	color:#000;
+	font-weight:normal;
+	font-size: 11px;
+	height: 25px;
+	border-top: solid 1px #8b8b8a;
+}
+
+.itemstyle 
+{
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.controlStyle 
+{	
+	background-position:center;
+} 
+.hideGridColumn
+{
+    display:none;
+}
+/*
+========================================================================================================================== 
+LABEL PPOPERTIES
+==========================================================================================================================
+*/
+
+.label {
+	font-weight:normal;
+	font-size: 11px;
+	color: #000000;
+	font-family:'Century Gothic',Arial;
+	text-align:left; height:21px;
+}
+
+.labelL {
+	padding-left:3px;
+	font-size: 11px;
+	font-family:'Century Gothic',Arial;
+	text-align:left;
+	color: #000000;padding-right: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.labelR {
+	padding:1px;
+    padding-right: 3px;
+	font-size: 11px;
+	font-family:'Century Gothic',Arial;
+	text-align:right;
+	color: #000000;height:18px;
+}
+
+.labelC {
+	padding: 1px;
+	font-size: 11px;
+	font-family:'Century Gothic',Arial;
+	text-align:center;
+	color: #000000;height:18px;
+}
+
+.BiglabelL {  
+	font-size: 16px;
+	font-family: 'Century Gothic', Calibri, Arial;
+	text-align: left;
+	color: #000;
+}
+
+
+select {
+    height:22px !important;
+    cursor:pointer; 
+}
+
+/*
+========================================================================================================================== 
+LINK, BUTTON AND TAB BUTTON PPOPERTIES
+==========================================================================================================================
+*/
+
+.textLinks {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#2369d7;
+	font-weight:bold;
+	text-decoration:none;
+	text-align:right;
+	cursor:pointer;
+}
+
+.textLinks:hover {
+	color:#ec0a0a;
+}
+ 
+.AmtLinks {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#2369d7;
+	text-decoration:none;
+	text-align:right;
+	cursor:pointer;
+}
+
+.AmtLinks:hover {
+	color:#ec0a0a;
+}  
+.RowLink {
+    background-color:#FFFFFF;
+	cursor:pointer;
+}
+
+/*.RowLink:hover {
+	background-color:#d8def7;
+}*/
+
+.MenuLink {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+	font-weight:bold;
+	text-decoration:none;
+	text-align:right;
+	cursor:pointer;
+}
+
+.MenuLink:hover {
+	text-decoration:underline;	
+	color:#FFFFFF;
+}
+
+.MenuLink_selected 
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	text-decoration:none;
+	text-align:right;
+	cursor:pointer;
+	text-decoration:underline;	
+	color:#FFFFFF;
+}
+
+.MenuTabs
+{
+	border: solid 1px #717070; font-weight:bold; 
+	border-bottom:solid 1px #717070; height: 25px;
+	background-color:#ffffff; color:#717070;
+	
+	-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 0px 0px; cursor:pointer;
+	
+	background: -moz-linear-gradient(top, #ffffff, #c2c2c2);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#c2c2c2));
+	text-shadow: 1px 1px 1px #FFFFFF; outline: none; 
+}
+
+.MenuTabs:hover { 
+	color: #000000; font-weight:bold; 
+     font-weight:bold;
+}
+
+
+.MenuTabs_Selected
+{
+	border: solid 1px #717070; height: 25px;
+	border-bottom: solid 1px #ffffff; 
+	background-color:#ffffff;
+	font-weight:bold;
+	 
+	
+	-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+/*
+========================================================================================================================== 
+CONTAINER BOX PPOPERTIES : 
+	THIS PROPERTIES USE IN POPUP AND SMALL APPLICTION
+==========================================================================================================================
+*/
+
+.PopUp {
+    background-color:#555555;
+}
+
+.DivBorder { 
+	margin-top: 0px; 
+	border: solid 1px #cccccc; 
+	background-color:#ffffff; 
+	-moz-border-radius: 0px 10px 10px 10px;
+    -webkit-border-radius: 0px 10px 10px 10px;
+    border-radius: 0px 10px 10px 10px;
+}
+.labelTilteL { 
+	font-size: 16px;
+	font-family: 'Century Gothic', Calibri, Arial;
+	text-align:left;
+	color: #ffffff;
+}
+
+
+/*
+==========================================================================================================================
+*/
+
+.SmallBox {
+	margin-top: 100px; padding:30px; 
+	border: solid 1px #cccccc; 
+	background-color:#ffffff; 
+	-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.SmallBox_Frame {
+	margin-top: 10px; padding:10px; 
+	border: solid 1px #cccccc; 
+	background-color:#ffffff; 
+	-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.SmallTab_Frame {
+	border: solid 2px #717070; 
+	background-color:#ffffff; 
+	-moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 0px 10px 10px 10px;
+}
+
+.vTitle { 
+	text-align:left; border-bottom: solid 1px #808080; 
+    background:#808080; font-size: 12px;
+    padding:6px; font-weight:bold; color:#ffffff;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 0px 8px 0px 0px; 
+}
+
+.linkstyle-z
+{
+    background-color: #eaeae9;
+    padding: 1px;
+    font-size: 11px;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center;
+    color: #042dc4;
+    border: solid 1px #000000;
+    font-weight:bold;
+	cursor:pointer;
+}
+
+.linkstyle-z:hover
+{
+    color:#ffffff;
+    background-color: #ffa800;
+
+}
+
+.linkstyle-row
+{
+    background-color: #ffffff;
+    padding: 1px;
+    font-size: 11px;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center;
+    color: #000000;
+    border: solid 1px #8b8b8a;
+    cursor:pointer;
+}
+
+.linkstyle-row:hover
+{
+    color:#ffffff;
+    background-color: #cccccc;
+}
+
+.vModuleTitle { padding-bottom: 9px; font-family: Arial, Century Gothic; font-size: 13px; font-weight:bold; color:#808080;}
+ 

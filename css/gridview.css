@@ -1,0 +1,83 @@
+/*
+==========================================================================================================================
+GRID VIEW PROPERTIES
+==========================================================================================================================
+*/
+
+	.mainGridView {
+		border: solid 1px #8B8B8A;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 11px;
+	}
+
+        .mainGridView tbody .titleBar {
+            padding: 5px;
+            background: #0275d8;
+            color: #fff;
+        }
+
+    .mainGridView tbody .odd {
+        padding: 5px; 
+        background: #f8f8f8;
+    }
+
+        .mainGridView tbody .even {
+            padding: 5px;
+            background: #efeeee;
+        }
+
+        .mainGridView tbody .activeBar {
+            padding: 5px;
+            background: #5cb85c;
+            color: #e6e4e4;
+        }
+       
+    .mainGridView tbody tr th {
+        padding: 5px;
+        font-size: 12px
+    }
+
+	.mainGridView tbody tr td {
+		padding: 2px;
+		padding-top: 3px
+	}
+
+	.mainGridView tr td Table {
+		height: 20px;
+		border-collapse: collapse;
+		float: right;
+		margin-top: 3px;
+		margin-bottom: 3px;
+		margin-right: 4px;
+	}
+
+	.mainGridView tr td Table tbody tr td a {
+		border: solid 1px #8B8B8A;
+		color: #8B8B8A;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-top: 5px;
+		padding-bottom: 4px;
+		text-decoration: none;
+		margin: 0px;
+		font-weight: bold;
+	}
+
+	.mainGridView tr td Table tbody tr td a:hover {
+		background-color: #e6e4e4;
+		color: #000;
+	}
+
+	.mainGridView tr td Table tbody tr td span {
+		border: solid 1px #337ab7;
+		color: #fff;
+		background: #337ab7;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-top: 5px;
+		padding-bottom: 4px;
+		text-decoration: none;
+		margin: 0px;
+		font-weight: bold;
+	}
+ 
