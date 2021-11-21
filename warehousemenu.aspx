@@ -58,7 +58,7 @@
             var hA = $(window).height();
             var wHeight = $(document).height();
             var panelWidth = $("#panel").width();
-             
+           
             $("object").css({ "height": (wHeight - 20) + "px", "width": + panelWidth + "px" });
              
         }); 

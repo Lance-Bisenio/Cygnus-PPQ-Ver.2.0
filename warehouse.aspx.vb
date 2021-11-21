@@ -14,7 +14,7 @@ Partial Class warehouse
             'Response.Redirect("http://" & SERVERIP & "/" & SITENAME & "/")
         End If
 
-        'If Not CanRun(Session("caption"), Request.Item("id")) Then
+        'If Not CanRun(Session("caption"), Request.Item("id")) Then 
         '	Session("denied") = "1"
         '          Server.Transfer("main.aspx")
         '          Exit Sub
@@ -264,6 +264,6 @@ Partial Class warehouse
             & TxtRemarks.Text.Trim & "','" & Session("uid") & "','" & Now & "')"
         CreateRecord(vSQL)
 
-        Response.Write(vSQL)
+        ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Successfully saved');", True)
     End Sub
 End Class

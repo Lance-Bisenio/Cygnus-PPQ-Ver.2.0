@@ -19,7 +19,7 @@
                 var qty = $("#TxtItemQty");
 
                 if (qty.val().trim() < 1 || qty.val().trim() == "") {
-                    qty.css("border", "solid 1px #811");
+                    //qty.css("border", "solid 1px #811");
                     event.preventDefault();
                 }
                 
