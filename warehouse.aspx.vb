@@ -7,6 +7,7 @@ Partial Class warehouse
     Dim vSQL As String = ""
     Dim c As New SqlClient.SqlConnection
     Public vScript As String = ""
+    Public vPendingItem As String = ""
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -45,7 +46,7 @@ Partial Class warehouse
 
             'BuildCombo("select ColSource, ColTitle from table_properties_dtl where ModuleCode='203' and ColType='SEARCHBY'", cmbSearchBy)
         End If
-
+        GetAllReleaseIted()
     End Sub
 
     Private Sub GetMasterItem(pMode As String)
@@ -87,7 +88,7 @@ Partial Class warehouse
             & "from item_master " _
             & vFilter
 
-
+        'Response.Write(vSQL)
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
@@ -99,7 +100,9 @@ Partial Class warehouse
         da.Dispose()
         ds.Dispose()
 
-
+        If txtSearch.Text.Trim <> "" And TxtLotno.Text.Trim <> "" Then
+            GetItemOnhandDetails(txtSearch.Text.Trim, TxtLotno.Text.Trim)
+        End If
     End Sub
     Protected Sub tbl_ItemMaster_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
         tblItemMaster.PageIndex = e.NewPageIndex
@@ -120,7 +123,12 @@ Partial Class warehouse
 
         c.ConnectionString = connStr
 
-        vFilter = "Item_Cd='" & tblItemMaster.SelectedRow.Cells(2).Text & "' "
+        If ItemCode = "" Then
+            vFilter = "Item_Cd='" & tblItemMaster.SelectedRow.Cells(2).Text & "' "
+        Else
+            vFilter = "Item_Cd='" & ItemCode & "' "
+        End If
+
 
         If TxtLotno.Text.Trim <> "" Then
             vFilter += "and LotNo like '%" & TxtLotno.Text.Trim & "%' "
@@ -257,13 +265,67 @@ Partial Class warehouse
 
         Dim ItemCd As String = tblItemMaster.SelectedRow.Cells(2).Text
         Dim LotNo As String = tblItemOnhandDetails.SelectedRow.Cells(1).Text
+        Dim Barcode As String = GenerateRandomBarcode(32)
 
-        vSQL = "insert into item_transfer (TranType,Item_Cd,LotNo,Qty,Remarks,CreatedBy,DateCreated) values " _
+        vSQL = "insert into item_transfer (TranType,Item_Cd,LotNo,Qty,Remarks,CreatedBy,DateCreated,RefTranTags,SystemRemarks, Barcode) values " _
             & "('" & DDLTranType.SelectedValue & "','" & ItemCd & "','" & LotNo & "','" _
             & TxtItemQty.Text.Trim & "','" _
-            & TxtRemarks.Text.Trim & "','" & Session("uid") & "','" & Now & "')"
+            & TxtRemarks.Text.Trim & "','" & Session("uid") & "','" & Now & "',1,'" _
+            & DDLTranType.SelectedItem.Text & "','" _
+            & Barcode & "')"
         CreateRecord(vSQL)
 
+        vPendingItem = ""
+        GetAllReleaseIted()
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Successfully saved');", True)
+    End Sub
+
+    Private Sub GetAllReleaseIted()
+
+        Dim c As New SqlClient.SqlConnection
+        Dim cm As New SqlClient.SqlCommand
+        Dim rs As SqlClient.SqlDataReader
+        c.ConnectionString = connStr
+
+        Try
+            c.Open()
+            cm.Connection = c
+        Catch ex As SqlClient.SqlException
+            ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Database connection error.');", True)
+            Exit Sub
+        End Try
+
+
+        vSQL = "select Type_Cd, SubLabel, (select count(TranId) from item_transfer where Type_Cd=TranType) as Ctr " _
+            & "from Item_warehouse_trantype order by Descr"
+
+        cm.CommandText = vSQL
+        rs = cm.ExecuteReader
+        Do While rs.Read
+
+            If rs("Ctr") = 0 Then
+                vPendingItem += "<li class='nav-item'>" _
+                        & "<a href='#' class='p-2 sidebar-link'>" & rs("SubLabel") & "" _
+                        & "" _
+                    & "</a></li>"
+            Else
+                vPendingItem += "<li class='nav-item'>" _
+                        & "<a href='#' id='" & rs("Type_Cd") & "' " _
+                        & "class='p-2 sidebar-link' data-toggle='modal' data-target='#ItemLisModal'>" & rs("SubLabel") & "" _
+                        & "<span class='badge badge-pill badge-danger ml-2' >" & rs("Ctr") & "</span>" _
+                    & "</a></li>"
+            End If
+
+
+        Loop
+
+        rs.Close()
+
+
+        c.Close()
+        c.Dispose()
+        cm.Dispose()
+
+        ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "ShowDetails();", True)
     End Sub
 End Class

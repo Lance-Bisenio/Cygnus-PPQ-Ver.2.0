@@ -76,7 +76,7 @@ Partial Class login
                         EventLog(Session("uid"), Request.ServerVariables("REMOTE_ADDR"), "LOGIN",
                                     "", "", "Successful LogIn on " & Format(Now, "yyyy/MM/dd HH:mm:ss"), "LOGIN")
 
-                        Response.Redirect("evolvemenus.aspx")
+                        Response.Redirect("evolvemenu.aspx")
                     Else
                         EventLog(usrname, Request.ServerVariables("REMOTE_ADDR"), "LOGIN",
                                     "", "", "Invalid LogIn Password Attempt on " & Format(Now, "yyyy/MM/dd HH:mm:ss"), "LOGIN")

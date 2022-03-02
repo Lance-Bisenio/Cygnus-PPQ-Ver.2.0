@@ -76,7 +76,7 @@ Namespace item_details
             c.Open()
             cm.Connection = c
 
-            cm.CommandText = vSQL 
+            cm.CommandText = vSQL
             cm.ExecuteNonQuery()
 
             cm.Dispose()
@@ -84,5 +84,18 @@ Namespace item_details
             c.Dispose()
 
         End Sub
+
+        Public Function GenerateRandomBarcode(ByRef iLength As Integer) As String
+            Dim rdm As New Random()
+            Dim allowChrs() As Char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ0123456789".ToCharArray()
+            Dim sResult As String = ""
+
+            For i As Integer = 0 To iLength - 1
+                sResult += allowChrs(rdm.Next(0, allowChrs.Length))
+            Next
+
+            Return sResult.ToUpper
+
+        End Function
     End Module
 End Namespace
