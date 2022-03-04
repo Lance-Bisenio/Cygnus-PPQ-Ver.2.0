@@ -5,12 +5,17 @@ Partial Class warehouse_ajax
     Dim vSQL As String = ""
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim PendingItemsList As String = Request.Item("warehouseType")
+        Dim PendingItemsList As String = iif(request.item("warehouseType") = "", "", request.item("warehouseType"))
+        Dim ReleasingDelItem As String = iif(request.item("ReleasingDelItem") = "", "", request.item("ReleasingDelItem"))
 
-        'If PendingItemsList.Trim <> "" Then
-        GetReleaseItemList(PendingItemsList)
-        'End If
+        If PendingItemsList.Trim <> "" Then
+            GetReleaseItemList(PendingItemsList)
+        End If
 
+        If ReleasingDelItem.Trim <> "" Then
+            vSQL = "delete from item_transfer where TranId='" & ReleasingDelItem & "'"
+            CreateRecord(vSQL)
+        End If
     End Sub
 
     Private Sub GetReleaseItemList(TranType As String)
@@ -31,7 +36,7 @@ Partial Class warehouse_ajax
         End Try
 
 
-        vSQL = "select Item_Cd, " _
+        vSQL = "select TranId, Item_Cd, " _
             & "(select Descr + ' ' + Descr1  from item_master b where a.Item_Cd=b.Item_Cd) as ItemDescr, " _
             & "LotNo, Qty, DateCreated  " _
             & "from item_transfer a where TranType='" & TranType & "'"
@@ -40,7 +45,7 @@ Partial Class warehouse_ajax
         rs = cm.ExecuteReader
         Do While rs.Read
             Ctr += 1
-            TrIdName = Ctr & "tr" & rs("Item_Cd")
+            TrIdName = "tr" & rs("TranId")
 
             Data += "<tr id='" & TrIdName & "'>" _
                         & "<td>" & Ctr & "</td>" _
@@ -49,7 +54,8 @@ Partial Class warehouse_ajax
                         & "<td>" & rs("LotNo") & "</td>" _
                         & "<td class='text-right'>" & rs("Qty") & "</td>" _
                         & "<td>" & rs("DateCreated") & "</td>" _
-                        & "<td class='text-center'><a href='#' onclick='test()' class='btn btn-danger btn-sm my-1 py-1'>Del</a></td>" _
+                        & "<td class='text-center'>" _
+                        & "<a href='#' id='" & rs("TranId") & "' onclick='DelItem(this.id)' name='Del' class='btn btn-danger btn-sm my-1 py-1'>Del</a></td>" _
                     & "</tr>"
 
 

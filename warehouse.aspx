@@ -44,8 +44,16 @@
     </style>
 
     <script>
+        function DelItem(Itemid) {
+            alert("test1-tr" + Itemid);
+            
+            $.post("warehouse_ajax.aspx", { ReleasingDelItem: Itemid }, function (result) {
+                $("#tr" + Itemid).remove();
+            });
 
+        }
         $(document).ready(function () {
+            $("a[title*='Del']").css("background-color", "yellow");
 
             $("#BtnSave").click(function (event) {
                 var qty = $("#TxtItemQty");
@@ -54,33 +62,32 @@
                     //qty.css("border", "solid 1px #811");
                     event.preventDefault();
                 }
-
             })
 
-            function Test() {
-                alert("test");
-            }
+            //$(".btn btn-danger btn-sm my-1 py-1").click(function (event) {
+            //    alert("test");
+            //})
+            
+           
 
-            $(".btn btn-danger").click(function (event) {
-                alert("test");
-
-            })
-        });
-
-
-        $(document).ready(function () {
             $("a").click(function () {
-                
-                var txt = this.id
+                var txt = this.id;
                 $.post("warehouse_ajax.aspx", { warehouseType: txt }, function (result) {
                     $("#PendingItemList").html(result);
                 });
             });
+            // $("a[name=|'Del']").click(function () {
+            //    var txt = this.id;
+            //    alert("test");
+            //});
+
         });
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
+        
+
 
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="collapse navbar-collapse">
@@ -90,7 +97,6 @@
                             <label class="nav-brand d-block mx-auto text-center text-secondary py-3 bottom-border">
                                 <h4>Pending Transaction</h4>
                             </label>
-
 
                             <ul class="navbar-nav flex-column mt-2">
                                 <%=vPendingItem %>
@@ -104,6 +110,9 @@
         <section>
             <div id="panel" class="col-lg-10 ml-auto">
                 <div class="container-fluid">
+                    <a href="#" id="1" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
+                    <a href="#" id="3" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
+                    <a href="#" id="2" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
                     <div class="row">
                         <div class="col-md-3">
                             <small>Warehouse List:</small>
@@ -299,7 +308,7 @@
                     </div>
 
                     <!-- Modal body -->
-                    <div class="modal-body"> 
+                    <div class="modal-body">
                         <table class="table table-bordered table-sm table-striped small">
                             <thead>
                                 <tr>
@@ -313,7 +322,6 @@
                                 </tr>
                             </thead>
                             <tbody id="PendingItemList">
-                               
                             </tbody>
                         </table>
                     </div>
