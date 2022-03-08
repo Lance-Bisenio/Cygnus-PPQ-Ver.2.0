@@ -296,8 +296,9 @@ Partial Class warehouse
         End Try
 
 
-        vSQL = "select Type_Cd, SubLabel, (select count(TranId) from item_transfer where Type_Cd=TranType) as Ctr " _
-            & "from Item_warehouse_trantype order by Descr"
+        vSQL = "select Type_Cd, SubLabel, (select count(TranId) from item_transfer where Type_Cd=TranType and DatePosted is null) as Ctr " _
+            & "from Item_warehouse_trantype " _
+            & "order by Descr"
 
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
@@ -327,5 +328,13 @@ Partial Class warehouse
         cm.Dispose()
 
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "ShowDetails();", True)
+    End Sub
+
+    Private Sub btnPost_ServerClick(sender As Object, e As EventArgs) Handles btnPost.ServerClick
+        vPendingItem = ""
+        vSQL = "update item_transfer set PostedBy='" & Session("uid") & "', DatePosted='" & Now & "' " _
+            & "where TranType='" & Session("TranType") & "'"
+        CreateRecord(vSQL)
+        GetAllReleaseIted()
     End Sub
 End Class

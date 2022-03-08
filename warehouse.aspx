@@ -109,10 +109,7 @@
         </nav>
         <section>
             <div id="panel" class="col-lg-10 ml-auto">
-                <div class="container-fluid">
-                    <a href="#" id="1" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
-                    <a href="#" id="3" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
-                    <a href="#" id="2" name="Del" class='btn btn-danger btn-sm my-1 py-1'>Del</a>
+                <div class="container-fluid"> 
                     <div class="row">
                         <div class="col-md-3">
                             <small>Warehouse List:</small>
@@ -328,7 +325,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">POST</button>
+                        <button type="button" id="btnPost" runat="server" class="btn btn-success" data-dismiss="modal">POST</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
 

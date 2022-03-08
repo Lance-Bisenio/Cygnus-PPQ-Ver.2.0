@@ -40,6 +40,9 @@ Partial Class warehouse_ajax
             & "(select Descr + ' ' + Descr1  from item_master b where a.Item_Cd=b.Item_Cd) as ItemDescr, " _
             & "LotNo, Qty, DateCreated  " _
             & "from item_transfer a where TranType='" & TranType & "'"
+
+        session("TranType") = TranType
+
         Data = vSQL
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
