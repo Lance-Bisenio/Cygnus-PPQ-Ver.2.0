@@ -109,7 +109,8 @@
                     <div class="dropdown-menu">
                         <h3 class="dropdown-header dropheader-text">Main Warehouse</h3>
                         <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('warehouse.aspx',this)" href="#">Releasing</a>
-                        <a class="dropdown-item dropitem-text sidebar-link mb-3" href="#">Return Receiving</a>
+                        <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
+                        <a class="dropdown-item dropitem-text sidebar-link mb-3" onclick="showModule('warehouse_report.aspx',this)" href="#">Report</a>
                         <div class="dropdown-divider"></div>
 
                         <h5 class="dropdown-header dropheader-text">Process Warehouse</h5>

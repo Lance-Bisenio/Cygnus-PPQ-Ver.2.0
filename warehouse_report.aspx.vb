@@ -2,7 +2,7 @@
 Imports System
 Imports item_details
 
-Partial Class warehouse
+Partial Class warehouse_report
     Inherits System.Web.UI.Page
     Dim vSQL As String = ""
     Dim c As New SqlClient.SqlConnection
@@ -23,28 +23,10 @@ Partial Class warehouse
 
         If Not IsPostBack Then
 
-            BuildCombo("select Proc_Cd, Descr from ref_item_process order by Descr", DDLWarehouseList)
-            DDLWarehouseList.Items.Add("Main Warehouse")
-            DDLWarehouseList.SelectedValue = "Main Warehouse"
+            DDLWarehouseList.Items.Add("Releasing")
+            DDLWarehouseList.Items.Add("Return")
+            DDLWarehouseList.SelectedValue = "Releasing"
 
-
-            'BuildCombo("select uom_Cd, Descr from ref_item_uom order by Descr", cmbUOMQ)
-            'cmbUOMQ.Items.Add("All")
-            'cmbUOMQ.SelectedValue = "All"
-
-            BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
-            cmbItemType.Items.Add("All")
-            cmbItemType.SelectedValue = "All"
-
-            BuildCombo("select Type_Cd, Descr from Item_warehouse_trantype order by Descr", DDLTranType)
-
-
-
-            'BuildCombo("select Class_Cd, Descr from ref_item_class order by Descr", cmbTypeClass)
-            'cmbTypeClass.Items.Add("All")
-            'cmbTypeClass.SelectedValue = "All"
-
-            'BuildCombo("select ColSource, ColTitle from table_properties_dtl where ModuleCode='203' and ColType='SEARCHBY'", cmbSearchBy)
         End If
         GetAllReleaseIted()
     End Sub
@@ -57,15 +39,15 @@ Partial Class warehouse
         Dim vTableName As String = ""
         Dim vSQL As String = ""
 
-        If txtSearch.Text <> "" Then
-            vFilter += "where Item_Cd like '%" & txtSearch.Text & "%' "
-        Else
-            vFilter = "where Item_Cd is not null "
-        End If
+        'If txtSearch.Text <> "" Then
+        '    vFilter += "where Item_Cd like '%" & txtSearch.Text & "%' "
+        'Else
+        '    vFilter = "where Item_Cd is not null "
+        'End If
 
-        If cmbItemType.SelectedValue <> "All" Then
-            vFilter += " and ItemType_Cd='" & cmbItemType.SelectedValue & "' "
-        End If
+        'If cmbItemType.SelectedValue <> "All" Then
+        '    vFilter += " and ItemType_Cd='" & cmbItemType.SelectedValue & "' "
+        'End If
 
 
         'If cmbTypeClass.SelectedValue <> "All" Then
@@ -100,9 +82,9 @@ Partial Class warehouse
         da.Dispose()
         ds.Dispose()
 
-        If txtSearch.Text.Trim <> "" And TxtLotno.Text.Trim <> "" Then
-            GetItemOnhandDetails(txtSearch.Text.Trim, TxtLotno.Text.Trim)
-        End If
+        'If txtSearch.Text.Trim <> "" And TxtLotno.Text.Trim <> "" Then
+        '    GetItemOnhandDetails(txtSearch.Text.Trim, TxtLotno.Text.Trim)
+        'End If
     End Sub
     Protected Sub tbl_ItemMaster_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
         tblItemMaster.PageIndex = e.NewPageIndex
@@ -130,9 +112,9 @@ Partial Class warehouse
         End If
 
 
-        If TxtLotno.Text.Trim <> "" Then
-            vFilter += "and LotNo like '%" & TxtLotno.Text.Trim & "%' "
-        End If
+        'If TxtLotno.Text.Trim <> "" Then
+        '    vFilter += "and LotNo like '%" & TxtLotno.Text.Trim & "%' "
+        'End If
 
 
         vSQL = "select distinct(LotNo) as LotNum, (select sum(Qty) from item_inv a where a.LotNo=b.LotNo And a.Item_Cd=b.Item_Cd) as QTY " _
