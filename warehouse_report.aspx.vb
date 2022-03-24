@@ -23,9 +23,9 @@ Partial Class warehouse_report
 
         If Not IsPostBack Then
 
-            DDLWarehouseList.Items.Add("Releasing")
-            DDLWarehouseList.Items.Add("Return")
-            DDLWarehouseList.SelectedValue = "Releasing"
+            BuildCombo("select Type_Cd, SubLabel from Item_warehouse_trantype order by Descr", DDLWarehouseList)
+            DDLWarehouseList.Items.Add("All")
+            DDLWarehouseList.SelectedValue = "All"
 
         End If
         GetAllReleaseIted()

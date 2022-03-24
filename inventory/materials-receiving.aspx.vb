@@ -413,7 +413,7 @@ Partial Class inventory_taskmaterials
                     "<td><b>Completion By:</b><br>" & rs("vCompletionBy") & "<br>" _
                         & Format(CDate(rs("DateRelease")), "MM/dd/yyyy HH:mm") & "</td>" &
                     "<td>" & rs("Qty") & "</td>" &
-                    "<td>" & rs("LotNo") & "</td>" &
+                    "<td>" & rs("LotNo").ToSting & "</td>" &
                     "<td>-</td>" &
                     "<td>" & rs("UOM") & "</td>" &
                     "<td>"
@@ -424,11 +424,19 @@ Partial Class inventory_taskmaterials
 
                     If h_Action.Value = "Save" Then
 
-                        If Request.Item(vID).Trim = "" Then
-                            vValue = 0
-                        Else
+                        Try
+                            If Request.Item(vID).Trim = "" Then
+                                vValue = 0
+                            End If
+                        Catch ex As Exception
                             vValue = Request.Item(vID)
-                        End If
+                        End Try
+
+                        'If Request.Item(vID).Trim = "" Then
+                        '    vValue = 0
+                        'Else
+                        '    vValue = Request.Item(vID)
+                        'End If
 
                     End If
                 Else

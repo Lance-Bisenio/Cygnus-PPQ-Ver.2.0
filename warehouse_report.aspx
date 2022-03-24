@@ -72,8 +72,6 @@
 <body>
     <form id="form1" runat="server">
         
-
-
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="collapse navbar-collapse">
                 <div class="container-fluid">
@@ -103,7 +101,7 @@
 
                         </div>
                         <div class="col-md-3">
-                            <small>Select Report Type:</small>
+                            <small>Process Warehouse List:</small>
                             <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
 
                         </div>
