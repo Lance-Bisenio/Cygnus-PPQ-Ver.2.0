@@ -72,26 +72,9 @@
 <body>
     <form id="form1" runat="server">
         
-        <nav class="navbar navbar-expand-md navbar-light">
-            <div class="collapse navbar-collapse">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-3 sidebar fixed-top mb-5">
-                            <label class="nav-brand d-block mx-auto text-center text-secondary py-3 bottom-border">
-                                <h4>Pending Transaction</h4>
-                            </label>
-
-                            <ul class="navbar-nav flex-column mt-2">
-                                <%=vPendingItem %>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </nav>
+         
         <section>
-            <div id="panel" class="col-lg-10 ml-auto">
+            <div id="panel" class="col-lg-12 ml-auto">
                 <div class="container-fluid"> 
                     <div class="row">
                         
@@ -106,16 +89,9 @@
 
                         </div>
                         <div class="col-md-3">
-                            <%--<small>Item UOM:</small>
-                    <asp:DropDownList ID="cmbUOMQ" runat="server" CssClass="form-control form-control-sm">
-                    </asp:DropDownList>--%>
+                          
                         </div>
-                        <div class="col-md-3">
-                            <%--<small>Source:</small>
-                    <asp:DropDownList ID="cmbSource" runat="server" CssClass="form-control form-control-sm">
-                        <asp:ListItem Value="Buy" Selected="True">Buy</asp:ListItem>
-                        <asp:ListItem Value="Make">Make</asp:ListItem>
-                    </asp:DropDownList>--%>
+                        <div class="col-md-3"> 
                         </div>
                     </div>
                     <div class="row">
@@ -149,7 +125,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="row">
+                    <%--<div class="row">
                         <div class="col-md-4 text-left text-primary">
                             <asp:Label ID="lblTotal" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
                         </div>
@@ -159,9 +135,9 @@
                         <div class="col-md-5">
                             <asp:Label ID="lblTotalPerLotnum" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-lg-4">
                             <asp:GridView ID="tblItemMaster" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
@@ -178,21 +154,10 @@
                                         </ItemTemplate>
                                         <HeaderStyle Width="30px"></HeaderStyle>
                                     </asp:TemplateField>
-
-                                    <%--<asp:TemplateField HeaderText="GCAS">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# GetGCAS(Eval("Item_Cd"))%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="90px" />
-                            </asp:TemplateField>--%>
-
-                                    <asp:BoundField DataField="Item_Cd" HeaderText="Item Code">
-                                        <ItemStyle Width="90px" />
+                                      
+                                    <asp:BoundField DataField="PostedRef" HeaderText="PostedRef"> 
                                     </asp:BoundField>
-
-                                    <asp:BoundField DataField="Descr" HeaderText="Item Description">
-                                        <ItemStyle CssClass="" />
-                                    </asp:BoundField>
+                                     
                                 </Columns>
 
                                 <SelectedRowStyle CssClass="table-info" />
@@ -202,7 +167,7 @@
                                 <AlternatingRowStyle CssClass="" />
                             </asp:GridView>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-sm-12 col-lg-8">
                             <asp:GridView ID="tblItemOnhandDetails" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
@@ -213,14 +178,24 @@
                                         <ItemStyle CssClass="" Width="40px" />
                                     </asp:CommandField>
 
-                                    <asp:BoundField DataField="LotNum" HeaderText="Lot Number">
+                                    <asp:BoundField DataField="Item_Cd" HeaderText="Item_Cd">
                                         <ItemStyle />
                                     </asp:BoundField>
-
+                                    <asp:BoundField DataField="Descr" HeaderText="Descr">
+                                        <ItemStyle />
+                                    </asp:BoundField>
                                     <asp:BoundField DataField="QTY" HeaderText="QTY">
                                         <ItemStyle CssClass="text-right" />
                                     </asp:BoundField>
-
+                                    <asp:BoundField DataField="LotNo" HeaderText="LotNo">
+                                        <ItemStyle CssClass="text-right" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="DateCreated" HeaderText="DateCreated">
+                                        <ItemStyle CssClass="text-right" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="DatePosted" HeaderText="DatePosted">
+                                        <ItemStyle CssClass="text-right" />
+                                    </asp:BoundField>
                                 </Columns>
 
 
@@ -231,6 +206,7 @@
                                 <AlternatingRowStyle CssClass="" />
                             </asp:GridView>
                         </div>
+
                         <div class="col-md-5">
                             <asp:GridView ID="tblItemTransaction" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"

@@ -31,7 +31,7 @@ Partial Class warehouse_report
         GetAllReleaseIted()
     End Sub
 
-    Private Sub GetMasterItem(pMode As String)
+    Private Sub GetPostedItem(pMode As String)
         Dim c As New SqlClient.SqlConnection
         Dim da As SqlClient.SqlDataAdapter
         Dim ds As New DataSet
@@ -39,45 +39,17 @@ Partial Class warehouse_report
         Dim vTableName As String = ""
         Dim vSQL As String = ""
 
-        'If txtSearch.Text <> "" Then
-        '    vFilter += "where Item_Cd like '%" & txtSearch.Text & "%' "
-        'Else
-        '    vFilter = "where Item_Cd is not null "
-        'End If
-
-        'If cmbItemType.SelectedValue <> "All" Then
-        '    vFilter += " and ItemType_Cd='" & cmbItemType.SelectedValue & "' "
-        'End If
-
-
-        'If cmbTypeClass.SelectedValue <> "All" Then
-        '    vFilter += " and ItemClass_Cd='" & cmbTypeClass.SelectedValue & "' "
-        'End If
-
-        'If cmbUOMQ.SelectedValue <> "All" Then
-        '    vFilter += " and QtyUOM_Cd='" & cmbUOMQ.SelectedValue & "' "
-        'End If
-        vFilter += " Order By Item_Cd asc"
 
         c.ConnectionString = connStr
-        vSQL = "select Item_Cd,Descr, " _
-            & "(select Descr from ref_item_customer where ref_item_customer.Customer_Cd=item_master.Customer_Cd) As vCustomer, " _
-            & "(select Descr from ref_item_supplier where ref_item_supplier.Supp_Cd=item_master.Supplier_Cd) as vSupplier,Source, " _
-            & "(Select Descr from ref_item_type where ref_item_type.Type_Cd=item_master.ItemType_Cd) As vItemType, " _
-            & "(select Descr from ref_item_uom where ref_item_uom.UOM_Cd=item_master.QtyUOM_cd) as vUomWeight,NetWeight, " _
-            & "(Select Descr from ref_item_uom where ref_item_uom.UOM_Cd=item_master.WeightUOM_Cd) As vUomQty,CurrCost, " _
-            & "(select Descr from ref_item_class where ref_item_class.Class_Cd=item_master.ItemClass_Cd) as vTypeClass  " _
-            & "from item_master " _
-            & vFilter
-
-        'Response.Write(vSQL)
+        vSQL = "select distinct(PostRefNo) as PostedRef from item_transfer " _
+            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
         da.Fill(ds, "ItemMaster")
         tblItemMaster.DataSource = ds.Tables("ItemMaster")
         tblItemMaster.DataBind()
-        lblTotal.Text = "Total Item Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
+        'lblTotal.Text = "Total Item Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
@@ -88,7 +60,7 @@ Partial Class warehouse_report
     End Sub
     Protected Sub tbl_ItemMaster_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
         tblItemMaster.PageIndex = e.NewPageIndex
-        GetMasterItem("")
+        GetPostedItem("")
     End Sub
     Protected Sub tbl_ItemMaster_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tblItemMaster.SelectedIndexChanged
         GetItemOnhandDetails("", "")
@@ -117,10 +89,10 @@ Partial Class warehouse_report
         'End If
 
 
-        vSQL = "select distinct(LotNo) as LotNum, (select sum(Qty) from item_inv a where a.LotNo=b.LotNo And a.Item_Cd=b.Item_Cd) as QTY " _
-            & "from item_inv b " _
-            & "where " & vFilter & " " _
-            & "order by LotNo "
+        vSQL = "select Item_Cd, LotNo, Qty, DateCreated, DatePosted, " _
+            & "(select Descr + ' ' + Descr1 from item_master a where a.Item_Cd=b.Item_Cd) as Descr " _
+            & "from item_transfer b " _
+            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
 
         'Response.Write(vSQL)
 
@@ -138,7 +110,7 @@ Partial Class warehouse_report
             & "from item_inv " _
             & "where " & vFilter & " "
 
-        lblTotalPerItem.Text = "Total QTY per item code : " & GetRef(vSQL, 0)
+        'lblTotalPerItem.Text = "Total QTY per item code : " & GetRef(vSQL, 0)
 
     End Sub
     Protected Sub tblItemOnhandDetails_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tblItemOnhandDetails.SelectedIndexChanged
@@ -187,7 +159,7 @@ Partial Class warehouse_report
             & "where Item_Cd='" & tblItemMaster.SelectedRow.Cells(2).Text & "' and " _
             & "LotNo='" & tblItemOnhandDetails.SelectedRow.Cells(1).Text & "' "
 
-        lblTotalPerLotnum.Text = "Total QTY per lotnumber : " & GetRef(vSQL, 0)
+        'lblTotalPerLotnum.Text = "Total QTY per lotnumber : " & GetRef(vSQL, 0)
 
     End Sub
 
@@ -196,7 +168,7 @@ Partial Class warehouse_report
         tblItemMaster.SelectedIndex = -1
         tblItemOnhandDetails.SelectedIndex = -1
         tblItemTransaction.SelectedIndex = -1
-        GetMasterItem("")
+        GetPostedItem("")
 
     End Sub
     Public Function GetItemOnhand(ByVal pItemCd As String) As String
