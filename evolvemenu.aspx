@@ -114,7 +114,7 @@
                         <div class="dropdown-divider"></div>
 
                         <h5 class="dropdown-header dropheader-text">Process Warehouse</h5>
-                        <a class="dropdown-item dropitem-text sidebar-link" href="#">Raw-Materials Receiving</a>
+                        <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('processmaterials_receiving.aspx',this)" href="#">Raw-Materials Receiving</a>
                         <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Raw-Materials Return</a>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Releasing to Job Order</a>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
