@@ -173,10 +173,10 @@
                                 CssClass="table table-bordered table-sm" PageSize="20">
                                 <Columns>
 
-                                    <asp:CommandField ButtonType="Button" ShowSelectButton="True">
+                                    <%--<asp:CommandField ButtonType="Button" ShowSelectButton="True">
                                         <ControlStyle CssClass="btn btn-primary btn-sm" />
                                         <ItemStyle CssClass="" Width="40px" />
-                                    </asp:CommandField>
+                                    </asp:CommandField>--%>
 
                                     <asp:BoundField DataField="Item_Cd" HeaderText="Item_Cd">
                                         <ItemStyle />
