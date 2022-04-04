@@ -149,7 +149,7 @@
                         <div class="col-md-3">
                             <br />
                             <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm" runat="server" Text="Search" />
-                            <input type="button" runat="server" id="btnScan" value="Add to my list" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" />
+                             
                         </div>
                         <div class="col-md-3">
                         </div>
