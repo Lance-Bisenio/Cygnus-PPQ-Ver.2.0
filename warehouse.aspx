@@ -95,7 +95,8 @@
                     <div class="row">
                         <div class="col-lg-3 sidebar fixed-top mb-5">
                             <label class="nav-brand d-block mx-auto text-center text-secondary py-3 bottom-border">
-                                <h4>Pending Transaction</h4>
+                                <h4>Main Warehouse</h4>
+                                <h6 class="text-info">Releasing</h6>
                             </label>
 
                             <ul class="navbar-nav flex-column mt-2">
