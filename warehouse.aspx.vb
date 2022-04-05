@@ -333,10 +333,82 @@ Partial Class warehouse
     Private Sub btnPost_ServerClick(sender As Object, e As EventArgs) Handles btnPost.ServerClick
         vPendingItem = ""
         Dim postRefNo = Format(Now, "MMddyyyyHHmmss")
+        Session("PostRefNo") = postRefNo
+
         vSQL = "update item_transfer set PostedBy='" & Session("uid") & "', DatePosted='" & Now & "', " _
             & "PostRefNo=" & postRefNo & " " _
             & "where TranType='" & Session("TranType") & "'"
         CreateRecord(vSQL)
+        GetPostedItemList()
         GetAllReleaseIted()
+    End Sub
+
+    Private Sub GetPostedItemList()
+        Dim c As New SqlClient.SqlConnection
+        Dim cm As New SqlClient.SqlCommand
+        Dim rs As SqlClient.SqlDataReader
+        c.ConnectionString = connStr
+
+        Try
+            c.Open()
+            cm.Connection = c
+        Catch ex As SqlClient.SqlException
+            ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Database connection error.');", True)
+            Exit Sub
+        End Try
+
+
+        vSQL = "select * from item_transfer " _
+            & "where DatePosted is not null and ', " _
+            & "PostRefNo=" & Session("PostRefNo") & " " _
+            & "where TranType='" & Session("TranType") & "'"
+        Response.Write(vSQL)
+
+        cm.CommandText = vSQL
+        rs = cm.ExecuteReader
+        Do While rs.Read
+
+
+        Loop
+
+        rs.Close()
+
+
+        c.Close()
+        c.Dispose()
+        cm.Dispose()
+    End Sub
+    Private Sub Save(pMode As String)
+
+        If Session("uid") = "" Then
+            vScript = "alert('Login session has expired. Please re-login again.'); window.close();"
+        End If
+
+
+
+
+
+
+
+
+
+
+
+        vSQL = "insert into item_inv (" _
+                & "Item_Cd,SupplierBarcode,RefBarcode,Barcode,LotNo," _
+                & "Qty,UOM,Cost,TranType,Remarks,CreatedBy,DateCreated,JobOrderNo,WHName) values ('"
+
+        'vSQL += txtItemCd.Text.Trim & "','','" & vBatcNo & "','" & txtItemCd.Text.Trim & "','" _
+        '        & vLotNum & "','-" & txtQty.Text.Trim & "', '" & lblUOM.Text & "','" & lblCost.Text & "','" _
+        '        & "Main WAREHOUSE to Process Warehouse','Main WAREHOUSE to Process Warehouse','" _
+        '        & Session("uid") & "','" & Format(Now, "MM/dd/yyyy HH:mm") & "','" & vJO & "','')"
+
+
+        CreateRecord(vSQL)
+
+        ' ======================================================================================
+
+        vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
+
     End Sub
 End Class

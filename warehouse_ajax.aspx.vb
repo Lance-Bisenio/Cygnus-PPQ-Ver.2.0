@@ -39,9 +39,9 @@ Partial Class warehouse_ajax
         vSQL = "select TranId, Item_Cd, " _
             & "(select Descr + ' ' + Descr1  from item_master b where a.Item_Cd=b.Item_Cd) as ItemDescr, " _
             & "LotNo, Qty, DateCreated  " _
-            & "from item_transfer a where TranType='" & TranType & "'"
+            & "from item_transfer a where TranType='" & TranType & "' and DatePosted is null"
 
-        session("TranType") = TranType
+        Session("TranType") = TranType
 
         Data = vSQL
         cm.CommandText = vSQL
