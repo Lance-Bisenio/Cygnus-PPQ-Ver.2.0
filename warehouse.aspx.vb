@@ -331,14 +331,16 @@ Partial Class warehouse
     End Sub
 
     Private Sub btnPost_ServerClick(sender As Object, e As EventArgs) Handles btnPost.ServerClick
+
         vPendingItem = ""
         Dim postRefNo = Format(Now, "MMddyyyyHHmmss")
         Session("PostRefNo") = postRefNo
 
         vSQL = "update item_transfer set PostedBy='" & Session("uid") & "', DatePosted='" & Now & "', " _
             & "PostRefNo=" & postRefNo & " " _
-            & "where TranType='" & Session("TranType") & "'"
+            & "where TranType='" & Session("TranType") & "' and DatePosted is null"
         CreateRecord(vSQL)
+
         GetPostedItemList()
         GetAllReleaseIted()
     End Sub
@@ -358,54 +360,51 @@ Partial Class warehouse
         End Try
 
 
-        vSQL = "select * from item_transfer " _
-            & "where DatePosted is not null and ', " _
-            & "PostRefNo=" & Session("PostRefNo") & " " _
-            & "where TranType='" & Session("TranType") & "'"
-        Response.Write(vSQL)
+        vSQL = "select Item_Cd, PostRefNo, LotNo, Qty, Remarks, PostedBy, DatePosted, 0 as Unitcost,TranType, " _
+            & "(select QtyUOM_Cd from item_master a where a.Item_Cd=b.Item_Cd) As ItemUOM " _
+            & "from item_transfer b " _
+            & "where DatePosted Is Not null and " _
+            & "PostRefNo='" & Session("PostRefNo") & "' and " _
+            & "TranType='" & Session("TranType") & "'"
 
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
         Do While rs.Read
-
-
+            CreateItemInvRecord(
+                rs("Item_Cd"), rs("PostRefNo"), rs("LotNo"),
+                rs("Qty"), rs("Remarks"), rs("PostedBy"), rs("DatePosted"),
+                rs("Unitcost"), rs("TranType"), rs("ItemUOM"))
         Loop
-
         rs.Close()
-
 
         c.Close()
         c.Dispose()
         cm.Dispose()
     End Sub
-    Private Sub Save(pMode As String)
-
-        If Session("uid") = "" Then
-            vScript = "alert('Login session has expired. Please re-login again.'); window.close();"
-        End If
-
-
-
-
-
-
-
-
-
-
+    Private Sub CreateItemInvRecord(
+            pItemCode As String,
+            pBatchNo As String,
+            pLotno As String,
+            pQty As Decimal,
+            pRemarks As String,
+            pCreatedBy As String,
+            pDateCreated As Date,
+            pUnitCost As Decimal,
+            pWarehouseName As String,
+            pItemUOM As String)
 
         vSQL = "insert into item_inv (" _
                 & "Item_Cd,SupplierBarcode,RefBarcode,Barcode,LotNo," _
                 & "Qty,UOM,Cost,TranType,Remarks,CreatedBy,DateCreated,JobOrderNo,WHName) values ('"
 
-        'vSQL += txtItemCd.Text.Trim & "','','" & vBatcNo & "','" & txtItemCd.Text.Trim & "','" _
-        '        & vLotNum & "','-" & txtQty.Text.Trim & "', '" & lblUOM.Text & "','" & lblCost.Text & "','" _
-        '        & "Main WAREHOUSE to Process Warehouse','Main WAREHOUSE to Process Warehouse','" _
-        '        & Session("uid") & "','" & Format(Now, "MM/dd/yyyy HH:mm") & "','" & vJO & "','')"
+        vSQL += pItemCode.Trim & "','','" & pBatchNo & "','" & pItemCode.Trim & "','" _
+                & pLotno & "','-" & pQty & "', '" & pItemUOM.Trim & "','" & pUnitCost & "','" _
+                & "Main Warehouse to Process Warehouse','Main Warehouse to Process Warehouse','" _
+                & pCreatedBy & "','" & Format(pDateCreated, "MM/dd/yyyy HH:mm") & "','NONE','" & pWarehouseName & "')"
 
 
         CreateRecord(vSQL)
-
+        Response.Write(vSQL)
         ' ======================================================================================
 
         vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
