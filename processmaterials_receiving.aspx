@@ -72,7 +72,7 @@
 
             $("a").click(function () {
                 var txt = this.id;
-                $.post("warehouse_ajax.aspx", { warehouseType: txt }, function (result) {
+                $.post("warehouse_ajax.aspx", { ItemToReceive: txt }, function (result) {
                     $("#PendingItemList").html(result);
                 });
             });
