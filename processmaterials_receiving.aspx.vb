@@ -50,7 +50,8 @@ Partial Class processmaterials_receiving
         End Try
 
 
-        vSQL = "select Type_Cd, SubLabel, (select count(TranId) from item_transfer where Type_Cd=TranType and DateReceived is null) as Ctr " _
+        vSQL = "select Type_Cd, SubLabel, " _
+            & "(select count(TranId) from item_transfer where Type_Cd=TranType and DatePosted is not null and DateReceived is null) as Ctr " _
             & "from Item_warehouse_trantype " _
             & "order by Descr"
 
@@ -84,4 +85,86 @@ Partial Class processmaterials_receiving
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "ShowDetails();", True)
     End Sub
 
+    Private Sub btnAccept_ServerClick(sender As Object, e As EventArgs) Handles btnAccept.ServerClick
+
+        vPendingItem = ""
+        'Dim postRefNo = Format(Now, "MMddyyyyHHmmss")
+        'Session("PostRefNo") = postRefNo
+
+        vSQL = "update item_transfer set ReceivedBy='" & Session("uid") & "', DateReceived='" & Now & "', " _
+            & "PostRefNo='" & Session("PostRefNo") & "' " _
+            & "where TranType='" & Session("TranType") & "' and DatePosted is not null"
+
+        CreateRecord(vSQL)
+
+        GetPostedItemList()
+        GetAllReleaseIted()
+    End Sub
+
+    Private Sub GetPostedItemList()
+        Dim c As New SqlClient.SqlConnection
+        Dim cm As New SqlClient.SqlCommand
+        Dim rs As SqlClient.SqlDataReader
+        c.ConnectionString = connStr
+
+        Try
+            c.Open()
+            cm.Connection = c
+        Catch ex As SqlClient.SqlException
+            ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Database connection error.');", True)
+            Exit Sub
+        End Try
+
+
+        vSQL = "select Item_Cd, PostRefNo, LotNo, Qty, Remarks, PostedBy, DatePosted, 0 as Unitcost,TranType, " _
+            & "(select QtyUOM_Cd from item_master a where a.Item_Cd=b.Item_Cd) As ItemUOM " _
+            & "from item_transfer b " _
+            & "where DatePosted Is Not null and " _
+            & "PostRefNo='" & Session("PostRefNo") & "' and " _
+            & "TranType='" & Session("TranType") & "' and " _
+            & "DateReceived is not null"
+
+        cm.CommandText = vSQL
+        rs = cm.ExecuteReader
+        Do While rs.Read
+            CreateItemInvRecord(
+                rs("Item_Cd"), rs("PostRefNo"), rs("LotNo"),
+                rs("Qty"), rs("Remarks"), rs("PostedBy"), rs("DatePosted"),
+                rs("Unitcost"), rs("TranType"), rs("ItemUOM"))
+        Loop
+        rs.Close()
+
+        c.Close()
+        c.Dispose()
+        cm.Dispose()
+    End Sub
+    Private Sub CreateItemInvRecord(
+            pItemCode As String,
+            pBatchNo As String,
+            pLotno As String,
+            pQty As Decimal,
+            pRemarks As String,
+            pCreatedBy As String,
+            pDateCreated As Date,
+            pUnitCost As Decimal,
+            pWarehouseName As String,
+            pItemUOM As String)
+
+        vSQL = "insert into item_inv (" _
+                & "Item_Cd,SupplierBarcode,RefBarcode,Barcode,LotNo," _
+                & "Qty,UOM,Cost,TranType,Remarks,CreatedBy,DateCreated,JobOrderNo,WHName) values ('"
+
+        vSQL += pItemCode.Trim & "','','" & pBatchNo & "','" & pItemCode.Trim & "','" _
+                & pLotno & "','" & pQty & "', '" & pItemUOM.Trim & "','" & pUnitCost & "','" _
+                & "Process Warehouse Receiving','Process Warehouse Receiving','" _
+                & pCreatedBy & "','" & Format(pDateCreated, "MM/dd/yyyy HH:mm") & "','NONE','" & pWarehouseName & "')"
+
+
+        CreateRecord(vSQL)
+        ' ======================================================================================
+
+        vScript = "alert('Successfully Saved.');"
+        'vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
+
+    End Sub
 End Class

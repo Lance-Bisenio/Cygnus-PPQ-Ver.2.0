@@ -97,7 +97,7 @@ Partial Class warehouse_ajax
         End Try
 
 
-        vSQL = "select TranId, Item_Cd, " _
+        vSQL = "select TranId, Item_Cd, PostRefNo, " _
             & "(select Descr + ' ' + Descr1  from item_master b where a.Item_Cd=b.Item_Cd) as ItemDescr, " _
             & "LotNo, Qty, DateCreated  " _
             & "from item_transfer a where TranType='" & TranType & "' and " _
@@ -120,11 +120,9 @@ Partial Class warehouse_ajax
                         & "<td>" & rs("LotNo") & "</td>" _
                         & "<td class='text-right'>" & rs("Qty") & "</td>" _
                         & "<td>" & rs("DateCreated") & "</td>" _
-                        & "<td class='text-center'>" _
-                        & "<a href='#' id='" & rs("TranId") & "' onclick='DelItem(this.id)' name='Del' class='btn btn-danger btn-sm my-1 py-1'>Del</a></td>" _
                     & "</tr>"
 
-
+            Session("PostRefNo") = rs("PostRefNo")
         Loop
         Data += vSQL
         rs.Close()

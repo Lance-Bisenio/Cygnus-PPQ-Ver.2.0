@@ -96,7 +96,7 @@
                         <div class="col-lg-3 sidebar fixed-top mb-5">
                             <label class="nav-brand d-block mx-auto text-center text-secondary py-3 bottom-border">
                                 <h4>Process Warehouse</h4>
-                                <h6>Raw-Materials Receiving</h6>
+                                <h6 class="text-info">Raw-Materials Receiving</h6>
                             </label>
 
                             <ul class="navbar-nav flex-column mt-2">
@@ -296,7 +296,6 @@
                                     <th>LOTNO</th>
                                     <th>QTY</th>
                                     <th>Date Created</th>
-                                    <th>Del</th>
                                 </tr>
                             </thead>
                             <tbody id="PendingItemList">
@@ -306,7 +305,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" id="btnPost" runat="server" class="btn btn-success" data-dismiss="modal">POST</button>
+                        <button type="button" id="btnAccept" runat="server" class="btn btn-success text-uppercase" data-dismiss="modal">Accept</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
 
