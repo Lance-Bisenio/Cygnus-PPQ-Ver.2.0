@@ -162,8 +162,8 @@ Partial Class processmaterials_receiving
 
         CreateRecord(vSQL)
         ' ======================================================================================
+        Page.ClientScript.RegisterStartupScript(Me.GetType(), "window-script", "alert('Successfully Saved.')", True)
 
-        vScript = "alert('Successfully Saved.');"
         'vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
 
     End Sub
