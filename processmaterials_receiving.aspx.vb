@@ -13,12 +13,6 @@ Partial Class processmaterials_receiving
             'Response.Redirect("http://" & SERVERIP & "/" & SITENAME & "/")
         End If
 
-        'If Not CanRun(Session("caption"), Request.Item("id")) Then 
-        '	Session("denied") = "1"
-        '          Server.Transfer("main.aspx")
-        '          Exit Sub
-        'End If
-
         If Not IsPostBack Then
 
             BuildCombo("select Proc_Cd, Descr from ref_item_process order by Descr", DDLWarehouseList)
@@ -88,9 +82,6 @@ Partial Class processmaterials_receiving
     Private Sub btnAccept_ServerClick(sender As Object, e As EventArgs) Handles btnAccept.ServerClick
 
         vPendingItem = ""
-        'Dim postRefNo = Format(Now, "MMddyyyyHHmmss")
-        'Session("PostRefNo") = postRefNo
-
         vSQL = "update item_transfer set ReceivedBy='" & Session("uid") & "', DateReceived='" & Now & "', " _
             & "PostRefNo='" & Session("PostRefNo") & "' " _
             & "where TranType='" & Session("TranType") & "' and DatePosted is not null"
@@ -163,8 +154,6 @@ Partial Class processmaterials_receiving
         CreateRecord(vSQL)
         ' ======================================================================================
         Page.ClientScript.RegisterStartupScript(Me.GetType(), "window-script", "alert('Successfully Saved.')", True)
-
-        'vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
 
     End Sub
 End Class
