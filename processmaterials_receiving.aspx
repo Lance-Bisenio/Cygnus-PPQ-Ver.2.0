@@ -145,18 +145,7 @@
                         </div>
                         <div class="col-md-3"></div>
                     </div>  
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4 text-left text-primary">
-                            <asp:Label ID="lblTotal" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                        <div class="col-md-3 text-left text-primary">
-                            <asp:Label ID="lblTotalPerItem" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                        <div class="col-md-5">
-                            <asp:Label ID="lblTotalPerLotnum" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                    </div>
+                    <br /> 
                     <div class="row">
                         <div class="col-md-4">
                             <asp:GridView ID="tblItemMaster" runat="server" AllowPaging="True"
