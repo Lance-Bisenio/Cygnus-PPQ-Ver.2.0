@@ -111,54 +111,40 @@
         <section>
             <div id="panel" class="col-lg-10 ml-auto">
                 <div class="container-fluid"> 
-                    <div class="row">
+                   <div class="row">
+                        
                         <div class="col-md-3">
-                            <small>Warehouse List:</small>
+                            <small>Date Posted From:</small>
+                            <asp:TextBox ID="TxtDatePosterFrom" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
+
+                        </div>
+                        <div class="col-md-3">
+                            <small>Process Warehouse List:</small>
                             <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
 
                         </div>
                         <div class="col-md-3">
-                            <small>Item Type:</small>
-                            <asp:DropDownList ID="cmbItemType" runat="server" CssClass="form-control form-control-sm">
-                            </asp:DropDownList>
-
-                        </div>
-                        <div class="col-md-3"> 
+                          
                         </div>
                         <div class="col-md-3"> 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <small>Curing Date From:</small>
-                            <asp:TextBox ID="txtDateFrom" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <small>Quick Search (Enter Item Code):</small>
-                            <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <small>Lot Number:</small>
-                            <asp:TextBox ID="TxtLotno" runat="server" CssClass="form-control form-control-sm" placeholder="Enter lot number and select the item code"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
+                            <small>Date Posted To:</small>
+                            <asp:TextBox ID="TxtDatePosterTo" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
                         </div>
                         <div class="col-md-3">
                             <br />
                             <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm" runat="server" Text="Search" />
-                             
+                            <input type="button" runat="server" id="btnScan" value="Add to my list" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" />
+
                         </div>
                         <div class="col-md-3">
+                            
                         </div>
-
-                        <div class="col-md-3 text-right text-primary">
-                            <br />
-
-                        </div>
-                    </div>
+                        <div class="col-md-3"></div>
+                    </div>  
                     <br />
                     <div class="row">
                         <div class="col-md-4 text-left text-primary">

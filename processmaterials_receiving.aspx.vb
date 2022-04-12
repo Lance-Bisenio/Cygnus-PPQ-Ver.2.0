@@ -19,9 +19,9 @@ Partial Class processmaterials_receiving
             DDLWarehouseList.Items.Add("Main Warehouse")
             DDLWarehouseList.SelectedValue = "Main Warehouse"
 
-            BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
-            cmbItemType.Items.Add("All")
-            cmbItemType.SelectedValue = "All"
+            'BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
+            'cmbItemType.Items.Add("All")
+            'cmbItemType.SelectedValue = "All"
 
             BuildCombo("select Type_Cd, Descr from Item_warehouse_trantype order by Descr", DDLTranType)
 
