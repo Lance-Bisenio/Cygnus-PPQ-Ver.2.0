@@ -114,7 +114,7 @@
                    <div class="row">
                         
                         <div class="col-md-3">
-                            <small>Date Posted From:</small>
+                            <small>Date Received From:</small>
                             <asp:TextBox ID="TxtDatePosterFrom" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
 
                         </div>
@@ -131,7 +131,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <small>Date Posted To:</small>
+                            <small>Date Received To:</small>
                             <asp:TextBox ID="TxtDatePosterTo" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
                         </div>
                         <div class="col-md-3">
