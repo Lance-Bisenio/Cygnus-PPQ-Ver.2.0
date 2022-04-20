@@ -15,9 +15,9 @@ Partial Class processmaterials_receiving
 
         If Not IsPostBack Then
 
-            BuildCombo("select Proc_Cd, Descr from ref_item_process order by Descr", DDLWarehouseList)
-            DDLWarehouseList.Items.Add("Main Warehouse")
-            DDLWarehouseList.SelectedValue = "Main Warehouse"
+            'BuildCombo("select Proc_Cd, Descr from ref_item_process order by Descr", DDLWarehouseList)
+            'DDLWarehouseList.Items.Add("Main Warehouse")
+            'DDLWarehouseList.SelectedValue = "Main Warehouse"
 
             'BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
             'cmbItemType.Items.Add("All")
