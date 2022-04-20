@@ -119,8 +119,8 @@
 
                         </div>
                         <div class="col-md-3">
-                            <small>Process Warehouse List:</small>
-                            <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
+                            <%--<small>Process Warehouse List:</small>
+                            <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>--%>
 
                         </div>
                         <div class="col-md-3">
