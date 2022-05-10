@@ -404,7 +404,7 @@ Partial Class warehouse
 
 
         CreateRecord(vSQL)
-        Response.Write(vSQL)
+        'Response.Write(vSQL)
         ' ======================================================================================
 
         vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "

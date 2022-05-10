@@ -107,21 +107,21 @@
                     <a class="nav-link dropdown-toggle mt-1" href="#" id="navbardrop_warehouse" data-toggle="dropdown">Warehouse
                     </a>
                     <div class="dropdown-menu">
-                        <h3 class="dropdown-header dropheader-text">Main Warehouse</h3>
+                        <h3 class="dropdown-header dropheader-text text-info">Main Warehouse</h3>
                         <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('warehouse.aspx',this)" href="#">Releasing</a>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
                         <a class="dropdown-item dropitem-text sidebar-link mb-3" onclick="showModule('warehouse_report.aspx',this)" href="#">Report</a>
                         <div class="dropdown-divider"></div>
 
-                        <h5 class="dropdown-header dropheader-text">Process Warehouse</h5>
+                        <h5 class="dropdown-header dropheader-text text-info">Process Warehouse</h5>
                         <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('processmaterials_receiving.aspx',this)" href="#">Raw-Materials Receiving</a>
-                        <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Raw-Materials Return</a>
+                        <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Return to Warehouse</a>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Releasing to Job Order</a>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
 
                         <div class="dropdown-divider"></div>
 
-                        <h5 class="dropdown-header dropheader-text">Job Order</h5>
+                        <h5 class="dropdown-header dropheader-text text-info">Job Order</h5>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Raw-Materials Receiving</a>
                         <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Return to process warehouse</a> 
                     </div>
