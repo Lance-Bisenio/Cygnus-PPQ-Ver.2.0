@@ -74,8 +74,14 @@
         
          
         <section>
+            
             <div id="panel" class="col-lg-12 ml-auto">
+
                 <div class="container-fluid"> 
+                    <div class="row">
+                        <h3 class="pt-2">Main Warehouse Report</h3>
+                    </div>
+
                     <div class="row">
                         
                         <div class="col-md-3">
