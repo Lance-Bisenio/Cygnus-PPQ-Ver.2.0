@@ -119,9 +119,8 @@
 
                         </div>
                         <div class="col-md-3">
-                            <%--<small>Process Warehouse List:</small>
-                            <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>--%>
-
+                            <small>Process Warehouse List:</small>
+                            <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
                         </div>
                         <div class="col-md-3">
                           
@@ -137,8 +136,7 @@
                         <div class="col-md-3">
                             <br />
                             <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm" runat="server" Text="Search" />
-                            <input type="button" runat="server" id="btnScan" value="Add to my list" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" />
-
+                             
                         </div>
                         <div class="col-md-3">
                             
@@ -165,13 +163,9 @@
                                         <HeaderStyle Width="30px"></HeaderStyle>
                                     </asp:TemplateField>
                                       
-                                    <asp:BoundField DataField="Item_Cd" HeaderText="Item Code">
-                                        <ItemStyle Width="90px" />
+                                    <asp:BoundField DataField="PostedRef" HeaderText="PostedRef"> 
                                     </asp:BoundField>
-
-                                    <asp:BoundField DataField="Descr" HeaderText="Item Description">
-                                        <ItemStyle CssClass="" />
-                                    </asp:BoundField>
+                                     
                                 </Columns>
 
                                 <SelectedRowStyle CssClass="table-info" />

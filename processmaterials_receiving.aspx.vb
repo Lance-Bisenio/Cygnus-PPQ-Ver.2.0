@@ -14,10 +14,10 @@ Partial Class processmaterials_receiving
         End If
 
         If Not IsPostBack Then
+            BuildCombo("select Type_Cd, SubLabel from Item_warehouse_trantype order by Descr", DDLWarehouseList)
 
-            'BuildCombo("select Proc_Cd, Descr from ref_item_process order by Descr", DDLWarehouseList)
-            'DDLWarehouseList.Items.Add("Main Warehouse")
-            'DDLWarehouseList.SelectedValue = "Main Warehouse"
+            DDLWarehouseList.Items.Add("Main Warehouse")
+            DDLWarehouseList.SelectedValue = "Main Warehouse"
 
             'BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
             'cmbItemType.Items.Add("All")
@@ -91,7 +91,10 @@ Partial Class processmaterials_receiving
         GetPostedItemList()
         GetAllReleaseIted()
     End Sub
-
+    Protected Sub tbl_ItemMaster_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
+        tblItemMaster.PageIndex = e.NewPageIndex
+        GetPostedItemList()
+    End Sub
     Private Sub GetPostedItemList()
         Dim c As New SqlClient.SqlConnection
         Dim cm As New SqlClient.SqlCommand
@@ -155,5 +158,38 @@ Partial Class processmaterials_receiving
         ' ======================================================================================
         Page.ClientScript.RegisterStartupScript(Me.GetType(), "window-script", "alert('Successfully Saved.')", True)
 
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        GetPostedItemReport()
+    End Sub
+
+    Private Sub GetPostedItemReport()
+        Dim c As New SqlClient.SqlConnection
+        Dim da As SqlClient.SqlDataAdapter
+        Dim ds As New DataSet
+        Dim vFilter As String = ""
+        Dim vTableName As String = ""
+        Dim vSQL As String = ""
+
+
+        c.ConnectionString = connStr
+        vSQL = "select distinct(PostRefNo) as PostedRef from item_transfer " _
+            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
+
+        Response.Write(vSQL)
+        da = New SqlClient.SqlDataAdapter(vSQL, c)
+
+        da.Fill(ds, "ItemMaster")
+        tblItemMaster.DataSource = ds.Tables("ItemMaster")
+        tblItemMaster.DataBind()
+        'lblTotal.Text = "Total Item Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
+
+        da.Dispose()
+        ds.Dispose()
+
+        'If txtSearch.Text.Trim <> "" And TxtLotno.Text.Trim <> "" Then
+        '    GetItemOnhandDetails(txtSearch.Text.Trim, TxtLotno.Text.Trim)
+        'End If
     End Sub
 End Class

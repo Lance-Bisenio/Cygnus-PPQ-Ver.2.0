@@ -42,7 +42,10 @@ Partial Class warehouse_report
 
         c.ConnectionString = connStr
         vSQL = "select distinct(PostRefNo) as PostedRef from item_transfer " _
-            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
+            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and " _
+            & "DatePosted is not null and" _
+            & "DateReceived is null " _
+            & "order by PostRefNo"
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
