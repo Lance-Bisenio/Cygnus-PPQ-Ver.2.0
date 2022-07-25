@@ -63,13 +63,7 @@
                     event.preventDefault();
                 }
             })
-
-            //$(".btn btn-danger btn-sm my-1 py-1").click(function (event) {
-            //    alert("test");
-            //})
-            
-           
-
+             
             $("a").click(function () {
                 var txt = this.id;
                 $.post("warehouse_ajax.aspx", { warehouseType: txt }, function (result) {
@@ -118,17 +112,9 @@
                             </asp:DropDownList>
 
                         </div>
-                        <div class="col-md-3">
-                            <%--<small>Item UOM:</small>
-                    <asp:DropDownList ID="cmbUOMQ" runat="server" CssClass="form-control form-control-sm">
-                    </asp:DropDownList>--%>
+                        <div class="col-md-3"> 
                         </div>
-                        <div class="col-md-3">
-                            <%--<small>Source:</small>
-                    <asp:DropDownList ID="cmbSource" runat="server" CssClass="form-control form-control-sm">
-                        <asp:ListItem Value="Buy" Selected="True">Buy</asp:ListItem>
-                        <asp:ListItem Value="Make">Make</asp:ListItem>
-                    </asp:DropDownList>--%>
+                        <div class="col-md-3"> 
                         </div>
                     </div>
                     <div class="row">
