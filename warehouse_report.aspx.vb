@@ -52,14 +52,10 @@ Partial Class warehouse_report
         da.Fill(ds, "ItemMaster")
         tblItemMaster.DataSource = ds.Tables("ItemMaster")
         tblItemMaster.DataBind()
-        'lblTotal.Text = "Total Item Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
 
-        'If txtSearch.Text.Trim <> "" And TxtLotno.Text.Trim <> "" Then
-        '    GetItemOnhandDetails(txtSearch.Text.Trim, TxtLotno.Text.Trim)
-        'End If
     End Sub
     Protected Sub tbl_ItemMaster_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
         tblItemMaster.PageIndex = e.NewPageIndex
