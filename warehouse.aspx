@@ -178,13 +178,7 @@
                                         </ItemTemplate>
                                         <HeaderStyle Width="30px"></HeaderStyle>
                                     </asp:TemplateField>
-
-                                    <%--<asp:TemplateField HeaderText="GCAS">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# GetGCAS(Eval("Item_Cd"))%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="90px" />
-                            </asp:TemplateField>--%>
+                                     
 
                                     <asp:BoundField DataField="Item_Cd" HeaderText="Item Code">
                                         <ItemStyle Width="90px" />
@@ -236,12 +230,7 @@
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
                                 <Columns>
-
-                                    <%--<asp:CommandField ButtonType="Button" ShowSelectButton="True">
-                                <ControlStyle CssClass="btn btn-primary btn-sm" />
-                                <ItemStyle CssClass="" Width="40px" />
-                            </asp:CommandField>--%>
-
+                                     
                                     <asp:BoundField DataField="QTY" HeaderText="QTY">
                                         <ItemStyle CssClass="text-right" />
                                     </asp:BoundField>
@@ -338,15 +327,7 @@
                             <div class="col-md-12">
                                 <small>Remarks:</small>
                                 <asp:TextBox ID="TxtRemarks" runat="server" CssClass="form-control form-control-sm" Rows="3" TextMode="MultiLine"></asp:TextBox>
-                            </div>
-                            <%--<div class="col-sm-12">
-                                <div class="alert alert-info"> 
-                                    < %--<strong>Note:&nbsp;</strong> --% >
-                                Are you sure you want to process this transaction?
-                                <br />
-                                    If Yes, click the submit button.
-                                </div>
-                            </div>--%>
+                            </div> 
 
                             <div class="col-sm-12">
                                 <p id="demo" class="text-info"></p>
