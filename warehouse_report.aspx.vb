@@ -43,8 +43,8 @@ Partial Class warehouse_report
         c.ConnectionString = connStr
         vSQL = "select distinct(PostRefNo) as PostedRef from item_transfer " _
             & "where TranType='" & DDLWarehouseList.SelectedValue & "' and " _
-            & "DatePosted is not null and" _
-            & "DateReceived is null " _
+            & "DatePosted is not null   " _
+            & " " _
             & "order by PostRefNo"
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
@@ -95,7 +95,9 @@ Partial Class warehouse_report
         vSQL = "select Item_Cd, LotNo, Qty, DateCreated, DatePosted, " _
             & "(select Descr + ' ' + Descr1 from item_master a where a.Item_Cd=b.Item_Cd) as Descr " _
             & "from item_transfer b " _
-            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
+            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and " _
+            & "PostRefNo='" & tblItemMaster.SelectedRow.Cells(2).Text & "' and " _
+            & "DatePosted is not null order by PostRefNo"
 
         'Response.Write(vSQL)
 

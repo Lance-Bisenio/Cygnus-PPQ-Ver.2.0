@@ -75,12 +75,7 @@
                 $.post("warehouse_ajax.aspx", { warehouseType: txt }, function (result) {
                     $("#PendingItemList").html(result);
                 });
-            });
-            // $("a[name=|'Del']").click(function () {
-            //    var txt = this.id;
-            //    alert("test");
-            //});
-
+            }); 
         });
     </script>
 </head>

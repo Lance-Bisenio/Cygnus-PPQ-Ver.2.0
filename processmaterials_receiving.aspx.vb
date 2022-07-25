@@ -10,7 +10,7 @@ Partial Class processmaterials_receiving
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         If Session("uid") = "" Then
-            'Response.Redirect("http://" & SERVERIP & "/" & SITENAME & "/")
+            ' value = Response.Redirect("http://" & SERVERIP & "/" & SITENAME & "/")
         End If
 
         If Not IsPostBack Then
@@ -125,12 +125,15 @@ Partial Class processmaterials_receiving
                 rs("Item_Cd"), rs("PostRefNo"), rs("LotNo"),
                 rs("Qty"), rs("Remarks"), rs("PostedBy"), rs("DatePosted"),
                 rs("Unitcost"), rs("TranType"), rs("ItemUOM"))
+
+
         Loop
         rs.Close()
 
         c.Close()
         c.Dispose()
         cm.Dispose()
+
     End Sub
     Private Sub CreateItemInvRecord(
             pItemCode As String,
