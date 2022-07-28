@@ -89,14 +89,11 @@ Partial Class warehouse_report
             & "PostRefNo='" & tblItemMaster.SelectedRow.Cells(2).Text & "' and " _
             & "DatePosted is not null order by PostRefNo"
 
-        'Response.Write(vSQL)
-
         da = New SqlClient.SqlDataAdapter(vSQL, c)
         da.Fill(ds, "ItemOnhandDetails")
         tblItemOnhandDetails.DataSource = ds.Tables("ItemOnhandDetails")
 
         tblItemOnhandDetails.DataBind()
-        'lblTotalLotnum.Text = "Total Item Retrieved : " & tblItemOnhandDetails.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
