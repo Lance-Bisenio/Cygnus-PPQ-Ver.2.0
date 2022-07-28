@@ -82,12 +82,6 @@ Partial Class warehouse_report
             vFilter = "Item_Cd='" & ItemCode & "' "
         End If
 
-
-        'If TxtLotno.Text.Trim <> "" Then
-        '    vFilter += "and LotNo like '%" & TxtLotno.Text.Trim & "%' "
-        'End If
-
-
         vSQL = "select Item_Cd, LotNo, Qty, DateCreated, DatePosted, " _
             & "(select Descr + ' ' + Descr1 from item_master a where a.Item_Cd=b.Item_Cd) as Descr " _
             & "from item_transfer b " _
