@@ -101,6 +101,8 @@
                     </a>
                     <div class="dropdown-menu">
                         <%=vMenus%>
+                        <hr />
+                        <a id="logout" runat="server" class="dropdown-item dropitem-text text-danger sidebar-link font-weight-bold" onclick="showModule('processmaterials_receiving.aspx',this)" href="#">Logout</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -109,21 +111,27 @@
                     <div class="dropdown-menu">
                         <h3 class="dropdown-header dropheader-text text-info">Main Warehouse</h3>
                         <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('warehouse.aspx',this)" href="#">Releasing</a>
-                        <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
-                        <a class="dropdown-item dropitem-text sidebar-link mb-3" onclick="showModule('warehouse_report.aspx',this)" href="#">Report</a>
+                        <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('notfound.aspx',this)" href="#">Return Receiving</a> 
                         <div class="dropdown-divider"></div>
 
                         <h5 class="dropdown-header dropheader-text text-info">Process Warehouse</h5>
                         <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('processmaterials_receiving.aspx',this)" href="#">Raw-Materials Receiving</a>
-                        <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Return to Warehouse</a>
-                        <a class="dropdown-item dropitem-text sidebar-link" href="#">Releasing to Job Order</a>
-                        <a class="dropdown-item dropitem-text sidebar-link" href="#">Return Receiving</a>
+                        <a class="dropdown-item dropitem-text sidebar-link mb-2" onclick="showModule('notfound.aspx',this)" href="#">Return to Warehouse</a>
+
+
+                        <h5 class="dropdown-header dropheader-text text-info">Packing List</h5>
+                        <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('packinglist.aspx',this)" href="#">Packing Management</a>
+                        <a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('packinglist.aspx',this)" href="#">Packing List Report</a>
+
+
+                        <%--<a class="dropdown-item dropitem-text sidebar-link" onclick="showModule('notfound.aspx',this)" href="#">Releasing to Job Order</a>
+                        <a class="dropdown-item dropitem-text sidebar-link mb-5" onclick="showModule('notfound.aspx',this)" href="#">Return Receiving</a>
 
                         <div class="dropdown-divider"></div>
 
                         <h5 class="dropdown-header dropheader-text text-info">Job Order</h5>
                         <a class="dropdown-item dropitem-text sidebar-link" href="#">Raw-Materials Receiving</a>
-                        <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Return to process warehouse</a> 
+                        <a class="dropdown-item dropitem-text sidebar-link mb-2" href="#">Return to process warehouse</a> --%>
                     </div>
                 </li>
                 <li class="nav-item"></li>

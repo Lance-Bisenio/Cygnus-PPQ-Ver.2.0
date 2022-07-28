@@ -109,7 +109,13 @@
                         <asp:Button ID="BtnSearch" CssClass="btn btn-primary btn-sm" runat="server" Text="Search" />
                     </div>
                 </div>
-                <div class="col-md-1"><%--Page No. :--%></div>
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <input type="button" id="BtnAddItem" runat="server" class="btn btn-primary btn-sm" value="Add" disabled="disabled" />
+                        <input type="button" id="BtnEditItem" runat="server" class="btn btn-primary btn-sm" value="Edit" disabled="disabled" />
+                    </div>
+
+                </div>
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-1"></div>
@@ -117,16 +123,17 @@
                     <div class="col-md-10">
                     </div>
                 </div>
-            </div><br />
+            </div>
+            <br />
 
             <div class="row Mgin">
-                <div class="col-md-7">  
+                <div class="col-md-7">
                     <asp:GridView ID="TblPackingListHeader" runat="server" AllowPaging="True" BorderColor="#CCCCCC" Font-Size="12px"
                         AutoGenerateColumns="False" Width="100%" BorderStyle="Solid" BorderWidth="1px"
                         CssClass="table table-sm table-bordered table-striped" PageSize="20" EnableModelValidation="True"
                         SelectedRowStyle-CssClass="btn btn-info">
-                         
-                        <Columns> 
+
+                        <Columns>
                             <asp:CommandField ButtonType="Button" ShowSelectButton="True">
                                 <ItemStyle CssClass="" Width="40px" />
                                 <ControlStyle CssClass="btn btn-primary btn-sm" />
@@ -166,14 +173,17 @@
                             <asp:BoundField DataField="PONO" HeaderText="PONO">
                                 <ItemStyle />
                             </asp:BoundField>
+                            <asp:BoundField DataField="JONO" HeaderText="JONO">
+                                <ItemStyle />
+                            </asp:BoundField>
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created By">
                                 <ItemStyle />
                             </asp:BoundField>
                             <asp:BoundField DataField="DateCreated" HeaderText="Date Created">
                                 <ItemStyle />
                             </asp:BoundField>
-                            
-                             
+
+
                         </Columns>
 
                         <SelectedRowStyle CssClass="bg-warning" />
@@ -184,15 +194,16 @@
                     </asp:GridView>
                 </div>
                 <div class="col-md-5">
-                    <asp:GridView ID="tblItemMaster" runat="server" AllowPaging="True"
-                        AutoGenerateColumns="False" Width="100%"
-                        CssClass="table table-bordered " PageSize="10">
+                    <asp:GridView ID="tblItemMaster" runat="server" AllowPaging="True" BorderColor="#CCCCCC" Font-Size="12px"
+                        AutoGenerateColumns="False" Width="100%" BorderStyle="Solid" BorderWidth="1px"
+                        CssClass="table table-sm table-bordered table-striped" PageSize="20" EnableModelValidation="True"
+                        SelectedRowStyle-CssClass="btn btn-info">
                         <Columns>
 
                             <asp:CommandField ButtonType="Button" ShowSelectButton="True" SelectText="Select">
-                            <ItemStyle CssClass="labelC" Width="40px" />
-                            <ControlStyle CssClass="btn btn-primary btn-sm" />
-                        </asp:CommandField>
+                                <ItemStyle CssClass="labelC" Width="40px" />
+                                <ControlStyle CssClass="btn btn-primary btn-sm" />
+                            </asp:CommandField>
 
                             <asp:TemplateField HeaderText="#" HeaderStyle-Width="30px">
                                 <ItemTemplate>
@@ -223,7 +234,7 @@
 
                         </Columns>
 
-                        <SelectedRowStyle CssClass="bg-light" />
+                        <SelectedRowStyle CssClass="bg-warning" />
                         <PagerStyle Font-Size="8pt" />
                         <HeaderStyle CssClass="titleBar" />
                         <RowStyle CssClass="odd" />
@@ -288,7 +299,7 @@
             </div>
         </div>
 
-        <div id="ModalCreateNew" style="width: 100%" class="modal fade" role="dialog">
+        <div id="ModalCreateNew" style="width: 100%" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-lg">
 
                 <!-- Modal content-->
@@ -301,7 +312,7 @@
                         <div class="row Mgin">
                             <div class="col-md-8">
                                 Customer Name:
-                                <asp:DropDownList ID="CmdCustomerList" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList> 
+                                <asp:DropDownList ID="CmdCustomerList" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>
                             </div>
                             <div class="col-md-4">
                                 Date Created:
@@ -311,7 +322,7 @@
                         <div class="row Mgin">
                             <div class="col-md-8">
                                 Product Name:
-                                <asp:DropDownList ID="CmdProductList" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>  
+                                <asp:DropDownList ID="CmdProductList" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>
                             </div>
                             <div class="col-md-4">
                                 I.O Number
@@ -326,10 +337,17 @@
                                 <asp:TextBox ID="TxtPONO" runat="server" CssClass="form-control form-control-sm border border-danger"></asp:TextBox>
                             </div>
                         </div>
-                      
+                        <div class="row Mgin">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                JO Number
+                                <asp:TextBox ID="TxtJONO" runat="server" CssClass="form-control form-control-sm border border-danger"></asp:TextBox>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" id="BtnSubmit" runat="server">Submit</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="BtnSubmit" runat="server">Save</button>
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -350,7 +368,7 @@
                         <div class="row Mgin">
                             <div class="col-md-8">
                                 Customer Name:
-                                <asp:DropDownList ID="DropDownList1" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList> 
+                                <asp:DropDownList ID="DropDownList1" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>
                             </div>
                             <div class="col-md-4">
                                 Date Created:
@@ -360,7 +378,7 @@
                         <div class="row Mgin">
                             <div class="col-md-8">
                                 Product Name:
-                                <asp:DropDownList ID="DropDownList2" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>  
+                                <asp:DropDownList ID="DropDownList2" runat="server" Width="" CssClass="form-control form-control-sm border border-danger"></asp:DropDownList>
                             </div>
                             <div class="col-md-4">
                                 I.O Number
@@ -375,7 +393,7 @@
                                 <asp:TextBox ID="TextBox3" runat="server" CssClass="form-control form-control-sm border border-danger"></asp:TextBox>
                             </div>
                         </div>
-                      
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary btn-sm" id="Button1" runat="server">Submit</button>
@@ -385,6 +403,52 @@
 
             </div>
         </div>
+        <div id="ModalAddtem" style="width: 100%" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Item</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John</td>
+                                    <td>Doe</td>
+                                    <td>john@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Mary</td>
+                                    <td>Moe</td>
+                                    <td>mary@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td>July</td>
+                                    <td>Dooley</td>
+                                    <td>july@example.com</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm" id="Button2" runat="server">Save</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </form>
 </body>
 </html>
@@ -438,11 +502,15 @@
             $('#ModalCreateNew').modal();
         });
 
-        $('#BtnScanItem').click(function () { 
+        $('#BtnScanItem').click(function () {
             $('#ModalScan').modal();
         });
 
-        
+
+        $('#BtnAddItem').click(function () {
+            var RefNo = "<%=Session("BatchNo") %>";
+            $('#ModalAddtem').modal();
+        });
     });
 
 

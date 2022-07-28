@@ -102,8 +102,6 @@ Partial Class warehouse_report
             & "from item_inv " _
             & "where " & vFilter & " "
 
-        'lblTotalPerItem.Text = "Total QTY per item code : " & GetRef(vSQL, 0)
-
     End Sub
     Protected Sub tblItemOnhandDetails_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tblItemOnhandDetails.SelectedIndexChanged
         GetItemTransaction()
@@ -138,20 +136,16 @@ Partial Class warehouse_report
         tblItemTransaction.DataSource = ds.Tables("tblItemTransaction")
 
         tblItemTransaction.DataBind()
-        'lblTotalLotnum.Text = "Total Item Retrieved : " & tblItemOnhandDetails.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
 
-        'Response.Write("Qty: " & tblItemOnhandDetails.SelectedRow.Cells(2).Text)
         TxtItemQty.Text = tblItemOnhandDetails.SelectedRow.Cells(2).Text
 
         vSQL = "select sum(Qty) " _
             & "from item_inv " _
             & "where Item_Cd='" & tblItemMaster.SelectedRow.Cells(2).Text & "' and " _
             & "LotNo='" & tblItemOnhandDetails.SelectedRow.Cells(1).Text & "' "
-
-        'lblTotalPerLotnum.Text = "Total QTY per lotnumber : " & GetRef(vSQL, 0)
 
     End Sub
 

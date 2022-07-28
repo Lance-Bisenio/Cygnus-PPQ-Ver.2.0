@@ -163,8 +163,13 @@
                                         <HeaderStyle Width="30px"></HeaderStyle>
                                     </asp:TemplateField>
                                       
-                                    <asp:BoundField DataField="PostedRef" HeaderText="PostedRef"> 
+                                    <asp:BoundField DataField="Item_Cd" HeaderText="Item Code"> 
                                     </asp:BoundField>
+                                    <asp:BoundField DataField="ItemName" HeaderText="Item Name"> 
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="WHName" HeaderText="WHTag"> 
+                                    </asp:BoundField>
+                                    
                                      
                                 </Columns>
 

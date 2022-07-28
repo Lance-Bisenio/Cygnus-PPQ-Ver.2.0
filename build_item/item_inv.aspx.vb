@@ -45,8 +45,8 @@ Partial Class item_inv
             CmdCustomerList.Items.Add(" ")
             CmdCustomerList.SelectedValue = " "
 
-            BuildCombo("select Item_Cd, Descr + ' ' + Descr1 as ItemName, ItemType_Cd from item_master " _
-                       & "where Item_Cd is not null and ItemType_Cd in ('FG') order by ItemName", CmdProductList)
+            BuildCombo("select Item_Cd, Descr from item_master " _
+                       & "where Item_Cd is not null and ItemType_Cd in ('FG') order by Descr", CmdProductList)
             CmdProductList.Items.Add(" ")
             CmdProductList.SelectedValue = " "
 
@@ -63,13 +63,13 @@ Partial Class item_inv
         Dim ds As New DataSet
 
         c.ConnectionString = connStr
-        vSQL = "select BatchNo,Cust_Cd,Item_Cd,IONumber,PONO,format(DateCreated,'MM/dd/yyyy') as DateCreated, " _
+        vSQL = "select BatchNo,Cust_Cd,Item_Cd,IONumber,PONO, JONO,format(DateCreated,'MM/dd/yyyy') as DateCreated, " _
             & "(select Descr from ref_item_customer where a.Cust_Cd=Customer_Cd) As CustomerName, " _
-            & "(select Descr+ ' ' +Descr1 from item_master b where a.Item_Cd=b.Item_Cd) As ItemName, " _
+            & "(select Descr from item_master b where a.Item_Cd=b.Item_Cd) As ItemName, " _
             & "(select Emp_FName+ ' ' +Emp_LName from emp_master c where a.CreatedBy=c.Emp_Cd) As CreatedBy " _
             & "from item_packinglist_hdr a " _
             & "order by ItemName"
-
+        'Response.Write(vSQL)
         da = New SqlClient.SqlDataAdapter(vSQL, c)
         da.Fill(ds, "TblPackingListHeader")
         TblPackingListHeader.DataSource = ds.Tables("TblPackingListHeader")
@@ -80,13 +80,12 @@ Partial Class item_inv
         da.Dispose()
         ds.Dispose()
     End Sub
-
     Private Sub BuildItemMasterList()
-		Dim c As New SqlClient.SqlConnection
-		Dim da As SqlClient.SqlDataAdapter
-		Dim ds As New DataSet
-		Dim vFilter As String = ""
-		Dim vTableName As String = ""
+        Dim c As New SqlClient.SqlConnection
+        Dim da As SqlClient.SqlDataAdapter
+        Dim ds As New DataSet
+        Dim vFilter As String = ""
+        Dim vTableName As String = ""
 
 
         'vFilter = "where IsActive=" & IIf(cmbItemStatus.SelectedValue = "Deleted", 3, cmbItemStatus.SelectedValue)
@@ -103,24 +102,24 @@ Partial Class item_inv
             'End If
         End If
 
-		'If cmbSource.SelectedValue <> "All" Then
-		'	vFilter += " and Source='" & cmbSource.SelectedValue & "' "
-		'End If
+        'If cmbSource.SelectedValue <> "All" Then
+        '	vFilter += " and Source='" & cmbSource.SelectedValue & "' "
+        'End If
 
-		'If cmbItemType.SelectedValue <> "All" Then
-		'	vFilter += " and ItemType_Cd='" & cmbItemType.SelectedValue & "' "
-		'End If
+        'If cmbItemType.SelectedValue <> "All" Then
+        '	vFilter += " and ItemType_Cd='" & cmbItemType.SelectedValue & "' "
+        'End If
 
-		'If cmbTypeClass.SelectedValue <> "All" Then
-		'	vFilter += " and ItemClass_Cd='" & cmbTypeClass.SelectedValue & "' "
-		'End If
+        'If cmbTypeClass.SelectedValue <> "All" Then
+        '	vFilter += " and ItemClass_Cd='" & cmbTypeClass.SelectedValue & "' "
+        'End If
 
-		'If cmbUOMQ.SelectedValue <> "All" Then
-		'	vFilter += " and QtyUOM_Cd='" & cmbUOMQ.SelectedValue & "' "
-		'End If
-		'vFilter += " Order By Item_Cd asc"
+        'If cmbUOMQ.SelectedValue <> "All" Then
+        '	vFilter += " and QtyUOM_Cd='" & cmbUOMQ.SelectedValue & "' "
+        'End If
+        'vFilter += " Order By Item_Cd asc"
 
-		c.ConnectionString = connStr
+        c.ConnectionString = connStr
         vSQL = "select Distinct(Item_Cd) as ItemCode, " _
             & "(select Descr from item_master b where a.Item_Cd=b.Item_Cd) As ItemName, " _
             & "(select RollWidth from item_master d where a.Item_Cd=d.Item_Cd) As vRollWidth, " _
@@ -138,17 +137,17 @@ Partial Class item_inv
         'Exit Sub
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
-		da.Fill(ds, "ItemMaster")
-		tblItemMaster.DataSource = ds.Tables("ItemMaster")
-		tblItemMaster.DataBind()
+        da.Fill(ds, "ItemMaster")
+        tblItemMaster.DataSource = ds.Tables("ItemMaster")
+        tblItemMaster.DataBind()
 
-		'lblTotal.Text = "<b>Total Item Retrieved : " & tbl_ItemMaster.DataSource.Rows.Count & "</b>"
+        'lblTotal.Text = "<b>Total Item Retrieved : " & tbl_ItemMaster.DataSource.Rows.Count & "</b>"
 
-		da.Dispose()
-		ds.Dispose()
-	End Sub
+        da.Dispose()
+        ds.Dispose()
+    End Sub
 
-	Private Sub tblItemMaster_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
+    Private Sub tblItemMaster_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles tblItemMaster.PageIndexChanging
         tblItemMaster.PageIndex = e.NewPageIndex
         tblItemMaster.SelectedIndex = -1
         BuildItemMasterList()
@@ -161,6 +160,8 @@ Partial Class item_inv
         'BtnPackingList.Enabled = False
         TblPackingListHeader.SelectedIndex = -1
 
+        BtnAddItem.Disabled = True
+        BtnEditItem.Disabled = True
     End Sub
 
     Protected Sub tblItemMaster_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tblItemMaster.SelectedIndexChanged
@@ -314,22 +315,32 @@ Partial Class item_inv
         End If
 
         If TxtPONO.Text.Trim = "" Then
+            ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Enter PO Number.');", True)
+            Exit Sub
+        End If
 
+        If TxtJONO.Text.Trim = "" Then
+            ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Enter Job Order Number.');", True)
+            Exit Sub
         End If
 
         If TxtIONUmber.Text.Trim = "" Then
 
         End If
 
-        vSQL = "insert into item_packinglist_hdr (BatchNo,Cust_Cd,Item_Cd,IONumber,PONO,CreatedBy,DateCreated) values " _
+        vSQL = "insert into item_packinglist_hdr (BatchNo,Cust_Cd,Item_Cd,IONumber,PONO,JONO,CreatedBy,DateCreated) values " _
             & "('" & BatchNo & "', '" & CmdCustomerList.SelectedValue & "','" & CmdProductList.SelectedValue & "', " _
-            & "'" & TxtIONUmber.Text.Trim & "', '" & TxtPONO.Text.Trim & "','" & Session("uid") & "','" & Now & "')"
+            & "'" & TxtIONUmber.Text.Trim & "', '" & TxtPONO.Text.Trim & "','" & TxtJONO.Text.Trim & "','" & Session("uid") & "','" & Now & "')"
+        Response.Write(vSQL)
         CreateRecord(vSQL)
 
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Successfully saved.');", True)
     End Sub
 
     Private Sub TblPackingListHeader_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TblPackingListHeader.SelectedIndexChanged
+
+        BtnAddItem.Disabled = False
+        BtnEditItem.Disabled = False
 
         Dim c As New SqlClient.SqlConnection(connStr)
         Dim cm As New SqlClient.SqlCommand
@@ -347,10 +358,10 @@ Partial Class item_inv
 
         cm.Connection = c
 
-        vSQL = "select distinct(JobOrderNo) as vJONO " _
+        vSQL = "select distinct(JONO) as vJONO " _
                   & "from item_packinglist_hdr " _
                   & "where BatchNo='" & TblPackingListHeader.SelectedRow.Cells(2).Text & "'"
-
+        'Response.Write(vSQL)
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
         Do While rs.Read

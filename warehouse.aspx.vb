@@ -216,7 +216,37 @@ Partial Class warehouse
         tblItemTransaction.SelectedIndex = -1
         GetMasterItem("")
 
+        DivItemList.Visible = True
+        DivSummary.Visible = False
+
     End Sub
+    Private Sub BtnViewSummary_Click(sender As Object, e As EventArgs) Handles BtnViewSummary.Click
+        Dim c As New SqlClient.SqlConnection
+        Dim da As SqlClient.SqlDataAdapter
+        Dim ds As New DataSet
+
+        Dim vFilter As String = ""
+        Dim vTableName As String = ""
+        Dim vSQL As String = ""
+
+        c.ConnectionString = connStr
+
+        vSQL = "select Distinct(PostRefNo), FORMAT (DatePosted, 'MM-dd-yyyy') as DatePosted, SystemRemarks from item_transfer where DatePosted is not null"
+        'Response.Write(vSQL)
+
+        da = New SqlClient.SqlDataAdapter(vSQL, c)
+        da.Fill(ds, "TblSummary")
+        TblSummary.DataSource = ds.Tables("TblSummary")
+
+        TblSummary.DataBind()
+
+        da.Dispose()
+        ds.Dispose()
+
+        DivItemList.Visible = False
+        DivSummary.Visible = True
+    End Sub
+
     Public Function GetItemOnhand(ByVal pItemCd As String) As String
         Dim Onhand As Decimal = 0.00
         Dim ResultOnhand As String = ""
@@ -250,17 +280,14 @@ Partial Class warehouse
         Return GetGCAS_List(pItemCd)
 
     End Function
-
     Private Sub tblItemTransaction_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles tblItemTransaction.PageIndexChanging
         tblItemTransaction.PageIndex = e.NewPageIndex
         GetItemTransaction()
     End Sub
-
     Private Sub tblItemTransaction_SelectedIndexChanging(sender As Object, e As GridViewSelectEventArgs) Handles tblItemTransaction.SelectedIndexChanging
         'ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('test.'); $('#ModalQty').modal();", True)
 
     End Sub
-
     Private Sub BtnSave_ServerClick(sender As Object, e As EventArgs) Handles BtnSave.Click
 
         Dim ItemCd As String = tblItemMaster.SelectedRow.Cells(2).Text
@@ -279,7 +306,6 @@ Partial Class warehouse
         GetAllReleaseIted()
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Successfully saved');", True)
     End Sub
-
     Private Sub GetAllReleaseIted()
 
         Dim c As New SqlClient.SqlConnection
@@ -329,7 +355,6 @@ Partial Class warehouse
 
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "ShowDetails();", True)
     End Sub
-
     Private Sub btnPost_ServerClick(sender As Object, e As EventArgs) Handles btnPost.ServerClick
 
         vPendingItem = ""
@@ -344,7 +369,6 @@ Partial Class warehouse
         GetPostedItemList()
         GetAllReleaseIted()
     End Sub
-
     Private Sub GetPostedItemList()
         Dim c As New SqlClient.SqlConnection
         Dim cm As New SqlClient.SqlCommand
@@ -410,4 +434,6 @@ Partial Class warehouse
         vScript = "alert('Successfully Saved.'); window.opener.document.getElementById('h_Mode').value='Reload'; window.opener.document.forms['form1'].submit(); "
 
     End Sub
+
+
 End Class

@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-
-    <link href="css/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
     <script src="content/jquery/jquery/jquery.3.6.js"></script>
     <script src="content/bootstrap/bootstrap-4.6.0-dist/js/bootstrap.js"></script>
 
@@ -41,12 +40,16 @@
         .modal-size {
             max-width: 800px;
         }
+
+        .grid {
+            max-width: 576px;
+        }
     </style>
 
     <script>
         function DelItem(Itemid) {
             alert("test1-tr" + Itemid);
-            
+
             $.post("warehouse_ajax.aspx", { ReleasingDelItem: Itemid }, function (result) {
                 $("#tr" + Itemid).remove();
             });
@@ -63,20 +66,18 @@
                     event.preventDefault();
                 }
             })
-             
+
             $("a").click(function () {
                 var txt = this.id;
                 $.post("warehouse_ajax.aspx", { warehouseType: txt }, function (result) {
                     $("#PendingItemList").html(result);
                 });
-            }); 
+            });
         });
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
-        
-
 
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="collapse navbar-collapse">
@@ -97,71 +98,43 @@
                 </div>
             </div>
         </nav>
+
         <section>
-            <div id="panel" class="col-lg-10 ml-auto">
-                <div class="container-fluid"> 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <small>Warehouse List:</small>
-                            <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
+            <div class="d-flex">
+                <div class="p-2" style="width: 305px"></div>
+                <div class="p-2 flex-grow-1">
+                    <div class="container-fluid">
+                        <div class="d-flex mb-3">
+                            <div class="p-2 col-3 flex-fill">
+                                <small>Item Type:</small>
+                                <asp:DropDownList ID="cmbItemType" runat="server" CssClass="form-control form-control-sm">
+                                </asp:DropDownList>
 
-                        </div>
-                        <div class="col-md-3">
-                            <small>Item Type:</small>
-                            <asp:DropDownList ID="cmbItemType" runat="server" CssClass="form-control form-control-sm">
-                            </asp:DropDownList>
+                                <small>Quick Search (Enter Item Code):</small>
+                                <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+                                <small>Lot Number:</small>
+                                <asp:TextBox ID="TxtLotno" runat="server" CssClass="form-control form-control-sm" placeholder="Enter lot number and select the item code"></asp:TextBox>
 
-                        </div>
-                        <div class="col-md-3"> 
-                        </div>
-                        <div class="col-md-3"> 
+
+                                <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm mt-2" runat="server" Text="Search" />
+                                <input type="button" runat="server" id="btnScan" value="Add to my list" class="btn btn-success btn-sm mt-2" data-toggle="modal" data-target="#myModal" />
+                            </div>
+                            <div class="p-2 col-3 flex-fill">
+                                <small>Warehouse List:</small>
+                                <asp:DropDownList ID="DDLWarehouseList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
+                                <small>Posted Date From:</small>
+                                <asp:TextBox ID="txtDateFrom" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
+                                <small>Posted Date To:</small>
+                                <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
+                                <asp:Button ID="BtnViewSummary" CssClass="btn btn-primary btn-sm mt-2" runat="server" Text="View Posted Transaction" />
+                            </div>
+                            <div class="p-2 flex-fill"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <small>Curing Date From:</small>
-                            <asp:TextBox ID="txtDateFrom" runat="server" CssClass="form-control form-control-sm" placeholder="mm / dd / yyyy"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <small>Quick Search (Enter Item Code):</small>
-                            <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <small>Lot Number:</small>
-                            <asp:TextBox ID="TxtLotno" runat="server" CssClass="form-control form-control-sm" placeholder="Enter lot number and select the item code"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-3">
-                            <br />
-                            <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm" runat="server" Text="Search" />
-                            <input type="button" runat="server" id="btnScan" value="Add to my list" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" />
-                        </div>
-                        <div class="col-md-3">
-                        </div>
-
-                        <div class="col-md-3 text-right text-primary">
-                            <br />
-
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4 text-left text-primary">
-                            <asp:Label ID="lblTotal" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                        <div class="col-md-3 text-left text-primary">
-                            <asp:Label ID="lblTotalPerItem" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                        <div class="col-md-5">
-                            <asp:Label ID="lblTotalPerLotnum" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
+                    <div id="DivItemList" runat="server" class="d-flex mb-3">
+                        <div class="p-2 flex-fill grid">
+                            <h6>
+                                <asp:Label ID="lblTotal" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label></h6>
                             <asp:GridView ID="tblItemMaster" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
@@ -178,7 +151,7 @@
                                         </ItemTemplate>
                                         <HeaderStyle Width="30px"></HeaderStyle>
                                     </asp:TemplateField>
-                                     
+
 
                                     <asp:BoundField DataField="Item_Cd" HeaderText="Item Code">
                                         <ItemStyle Width="90px" />
@@ -191,12 +164,14 @@
 
                                 <SelectedRowStyle CssClass="table-info" />
                                 <PagerStyle Font-Size="8pt" />
-                                <HeaderStyle CssClass="table-light" />
+                                <HeaderStyle CssClass="table-primary" />
                                 <RowStyle CssClass="" />
                                 <AlternatingRowStyle CssClass="" />
                             </asp:GridView>
                         </div>
-                        <div class="col-md-3">
+                        <div class="p-2 flex-fill grid">
+                            <h6>
+                                <asp:Label ID="lblTotalPerItem" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label></h6>
                             <asp:GridView ID="tblItemOnhandDetails" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
@@ -220,17 +195,19 @@
 
                                 <SelectedRowStyle CssClass="table-info" />
                                 <PagerStyle Font-Size="8pt" />
-                                <HeaderStyle CssClass="table-light" />
+                                <HeaderStyle CssClass="table-primary" />
                                 <RowStyle CssClass="" />
                                 <AlternatingRowStyle CssClass="" />
                             </asp:GridView>
                         </div>
-                        <div class="col-md-5">
+                        <div class="p-2 flex-fill grid">
+                            <h6>
+                                <asp:Label ID="lblTotalPerLotnum" runat="server" CssClass="" Text="Total Item Retrieved : 0"></asp:Label></h6>
                             <asp:GridView ID="tblItemTransaction" runat="server" AllowPaging="True"
                                 AutoGenerateColumns="False" Font-Size="Small"
                                 CssClass="table table-bordered table-sm" PageSize="20">
                                 <Columns>
-                                     
+
                                     <asp:BoundField DataField="QTY" HeaderText="QTY">
                                         <ItemStyle CssClass="text-right" />
                                     </asp:BoundField>
@@ -252,20 +229,106 @@
 
                                 <SelectedRowStyle CssClass="table-info" />
                                 <PagerStyle Font-Size="8pt" />
-                                <HeaderStyle CssClass="table-light" />
+                                <HeaderStyle CssClass="table-primary" />
                                 <RowStyle CssClass="" />
                                 <AlternatingRowStyle CssClass="" />
                             </asp:GridView>
                         </div>
                     </div>
-
                 </div>
+            </div>
+        </section>
+        <section>
+            <div id="DivSummary" runat="server" class="d-flex" visible="false">
+                <div class="p-2" style="width: 305px"></div>
+                <div class="p-2 flex-grow-1">
+
+                    <div class="d-flex">
+                        <div class="p-2 col-3">
+                            <asp:GridView ID="TblSummary" runat="server" AllowPaging="True"
+                                AutoGenerateColumns="False" Font-Size="Small"
+                                CssClass="table table-bordered table-sm" PageSize="20">
+                                <Columns>
+
+                                    <asp:CommandField ButtonType="Button" ShowSelectButton="True">
+                                        <ControlStyle CssClass="btn btn-primary btn-sm" />
+                                        <ItemStyle CssClass="" Width="40px" />
+                                    </asp:CommandField>
+
+                                    <asp:TemplateField HeaderText="#" HeaderStyle-Width="30px">
+                                        <ItemTemplate>
+                                            <%# Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                        <HeaderStyle Width="30px"></HeaderStyle>
+                                    </asp:TemplateField>
+
+
+                                    <asp:BoundField DataField="PostRefNo" HeaderText="BatchNo">
+                                        <ItemStyle Width="90px" />
+                                    </asp:BoundField>
+
+                                    <asp:BoundField DataField="DatePosted" HeaderText="Date Posted">
+                                        <ItemStyle CssClass="" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="SystemRemarks" HeaderText="Remarks">
+                                        <ItemStyle CssClass="" />
+                                    </asp:BoundField>
+                                </Columns>
+
+                                <SelectedRowStyle CssClass="table-info" />
+                                <PagerStyle Font-Size="8pt" />
+                                <HeaderStyle CssClass="table-primary" />
+                                <RowStyle CssClass="" />
+                                <AlternatingRowStyle CssClass="" />
+                            </asp:GridView>
+                        </div>
+                        <div class="p-2 flex-grow-1">
+                            <asp:GridView ID="TblTranDetails" runat="server" AllowPaging="True"
+                                AutoGenerateColumns="False" Font-Size="Small"
+                                CssClass="table table-bordered table-sm" PageSize="20">
+                                <Columns>
+
+                                    <asp:CommandField ButtonType="Button" ShowSelectButton="True">
+                                        <ControlStyle CssClass="btn btn-primary btn-sm" />
+                                        <ItemStyle CssClass="" Width="40px" />
+                                    </asp:CommandField>
+
+                                    <asp:TemplateField HeaderText="#" HeaderStyle-Width="30px">
+                                        <ItemTemplate>
+                                            <%# Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                        <HeaderStyle Width="30px"></HeaderStyle>
+                                    </asp:TemplateField>
+
+
+                                    <asp:BoundField DataField="PostRefNo" HeaderText="BatchNo">
+                                        <ItemStyle Width="90px" />
+                                    </asp:BoundField>
+
+                                    <asp:BoundField DataField="DatePosted" HeaderText="Date Posted">
+                                        <ItemStyle CssClass="" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="SystemRemarks" HeaderText="Remarks">
+                                        <ItemStyle CssClass="" />
+                                    </asp:BoundField>
+                                </Columns>
+
+                                <SelectedRowStyle CssClass="table-info" />
+                                <PagerStyle Font-Size="8pt" />
+                                <HeaderStyle CssClass="table-primary" />
+                                <RowStyle CssClass="" />
+                                <AlternatingRowStyle CssClass="" />
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
 
 
-        <div class="modal fade" id="ItemLisModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div id="ItemLisModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-size">
                 <div class="modal-content">
 
@@ -304,7 +367,6 @@
             </div>
         </div>
 
-
         <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -327,7 +389,7 @@
                             <div class="col-md-12">
                                 <small>Remarks:</small>
                                 <asp:TextBox ID="TxtRemarks" runat="server" CssClass="form-control form-control-sm" Rows="3" TextMode="MultiLine"></asp:TextBox>
-                            </div> 
+                            </div>
 
                             <div class="col-sm-12">
                                 <p id="demo" class="text-info"></p>

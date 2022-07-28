@@ -96,14 +96,22 @@ Partial Class bom_buildheader
                                 "(select Descr from ref_item_type where ref_item_type.Type_Cd=item_master.ItemType_Cd) as vItemType, ItemType_Cd " & _
                                 "from item_master where Item_Cd='" & cmbItem.SelectedValue & "'"
             'Response.Write(cm.CommandText)
+            'Exit Sub
             rs = cm.ExecuteReader
             If rs.Read Then
-                cmbNetWUOM.SelectedValue = IIf(IsDBNull(rs("WeightUOM_Cd")), " ", rs("WeightUOM_Cd"))
-                cmbMOUOM.SelectedValue = IIf(IsDBNull(rs("MinOrderQtyUOM_Cd")), " ", rs("MinOrderQtyUOM_Cd"))
+                'Response.Write("QtyUOM_Cd: " & rs("QtyUOM_Cd"))
+
+                Try
+                    cmbNetWUOM.SelectedValue = IIf(IsDBNull(rs("WeightUOM_Cd")), " ", rs("WeightUOM_Cd"))
+                    cmbMOUOM.SelectedValue = IIf(IsDBNull(rs("MinOrderQtyUOM_Cd")), " ", rs("MinOrderQtyUOM_Cd"))
+                    cmbItemUom.SelectedValue = IIf(IsDBNull(rs("QtyUOM_Cd")), "", rs("QtyUOM_Cd"))
+                Catch ex As Exception
+
+                End Try
+
                 txtItemType_Cd.Text = IIf(IsDBNull(rs("ItemType_Cd")), " ", rs("ItemType_Cd"))
                 txtItemType.Text = IIf(IsDBNull(rs("vItemType")), " ", rs("vItemType"))
-                 
-                cmbItemUom.SelectedValue = IIf(IsDBNull(rs("QtyUOM_Cd")), "", rs("QtyUOM_Cd"))
+
                 txtNetW.Text = IIf(IsDBNull(rs("NetWeight")), 0, rs("NetWeight"))
                 txtMOQty.Text = IIf(IsDBNull(rs("MinOrderQty")), 0, rs("MinOrderQty"))
                 txtSPRunDays.Text = IIf(IsDBNull(rs("ProdLeadDays")), 0, rs("ProdLeadDays"))

@@ -16,8 +16,8 @@ Partial Class processmaterials_receiving
         If Not IsPostBack Then
             BuildCombo("select Type_Cd, SubLabel from Item_warehouse_trantype order by Descr", DDLWarehouseList)
 
-            DDLWarehouseList.Items.Add("Main Warehouse")
-            DDLWarehouseList.SelectedValue = "Main Warehouse"
+            DDLWarehouseList.Items.Add("All")
+            DDLWarehouseList.SelectedValue = "All"
 
             'BuildCombo("select Type_Cd, Descr from ref_item_type order by Descr", cmbItemType)
             'cmbItemType.Items.Add("All")
@@ -177,8 +177,16 @@ Partial Class processmaterials_receiving
 
 
         c.ConnectionString = connStr
-        vSQL = "select distinct(PostRefNo) as PostedRef from item_transfer " _
-            & "where TranType='" & DDLWarehouseList.SelectedValue & "' and DatePosted is not null order by PostRefNo"
+
+        If DDLWarehouseList.SelectedValue <> "All" Then
+            vFilter = "TranType='" & DDLWarehouseList.SelectedValue & "' "
+        End If
+
+
+        vSQL = "select Item_Cd, WHName, " _
+            & "(select Descr from item_master a where a.Item_Cd=b.Item_Cd) as ItemName " _
+            & "from item_inv b " _
+            & "where " & vFilter & " TranType='Process Warehouse Receiving'"
 
         Response.Write(vSQL)
         da = New SqlClient.SqlDataAdapter(vSQL, c)

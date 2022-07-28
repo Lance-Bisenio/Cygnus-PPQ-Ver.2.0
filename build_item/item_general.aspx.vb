@@ -202,8 +202,11 @@ Partial Class Item_general
 				& "',SerialNo='" & txtSerialNo.Text.Trim & "', CurrCost='" & txtCost.Text.Trim & "',MinOrderQty='" & txtMinOrderQty.Text.Trim _
 				& "',ProdLeadDays='" & txtProdLeadTimeDays.Text.Trim & "',ProdLeadTime='" & txtProdLeadTimeHrs.Text.Trim _
 				& "',RlseLeadDays='" & txtReleaseLeadTimeDay.Text & "',RlseLeadTime='" & txtReleaseLeadTimeHrs.Text _
-				& "',ItemType_Cd='" & cmbItemType.SelectedValue & "',Source='" & cmbSource.SelectedValue & "',MinOrderQtyUOM_Cd='" & cmbMinOrderUom.SelectedValue _
-				& "',QtyUOM_Cd='" & cmbUomQty.SelectedValue & "',IsActive='" & cmbStatus.SelectedValue & "', CoreWeight='" & txtCoreWeight.Text.Trim _
+				& "',ItemType_Cd='" & cmbItemType.SelectedValue & "',Source='" & cmbSource.SelectedValue _
+				& "',MinOrderQtyUOM_Cd='" & cmbMinOrderUom.SelectedValue _
+				& "',QtyUOM_Cd='" & cmbUomQty.SelectedValue _
+				& "',WeightUOM_Cd='" & cmbUomQty.SelectedValue _
+				& "',IsActive='" & cmbStatus.SelectedValue & "', CoreWeight='" & txtCoreWeight.Text.Trim _
 				& "',ModifyBy='" & Session("uid") & "', DateModify='" & Now() & "', ItemClass_Cd='" & cmbTypeClass.SelectedValue _
 				& "',MaterialSpecs='" & txtMatSpecs.Text.Trim & "', RollWidth='" & txtRollWidth.Text.Trim & "', RepeatLenght='" & txtRepeatLenght.Text.Trim _
 				& "',BagDimension='" & txtBagDimension.Text.Trim & "' " _

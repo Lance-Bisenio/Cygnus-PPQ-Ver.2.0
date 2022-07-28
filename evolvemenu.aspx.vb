@@ -63,6 +63,11 @@ Partial Class evolvemenus
         'End If
     End Sub
 
+    Private Sub logout_ServerClick(sender As Object, e As EventArgs) Handles logout.ServerClick
+        Session.RemoveAll()
+        Server.Transfer("index.aspx")
+    End Sub
+
     'Private Sub GetChild(ByRef vParent As String)
     '    Dim cm As New SqlClient.SqlCommand
     '    Dim rs As SqlClient.SqlDataReader
