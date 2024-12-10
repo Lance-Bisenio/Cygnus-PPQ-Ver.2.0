@@ -70,7 +70,6 @@ Partial Class warehouse
         da.Fill(ds, "tblGetPackingList")
         tblGetPackingList.DataSource = ds.Tables("tblGetPackingList")
         tblGetPackingList.DataBind()
-        'lblTotal.Text = "Total Job Order Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
@@ -128,14 +127,12 @@ Partial Class warehouse
             & "SalesOrderNo " _
             & "From jo_header b " _
             & "where JobOrderNo in (select JONO from prod_completion where JobOrderNo=JONO and Sect_Cd in ('SLIT','BAGM') ) " & vFilter & " order by ItemName"
-        'Response.Write(vSQL)
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
         da.Fill(ds, "ItemMaster")
         tblItemMaster.DataSource = ds.Tables("ItemMaster")
         tblItemMaster.DataBind()
-        'lblTotal.Text = "Total Job Order Retrieved : " & tblItemMaster.DataSource.Rows.Count & ""
 
         da.Dispose()
         ds.Dispose()
@@ -204,8 +201,6 @@ Partial Class warehouse
             vSQL += "and Sect_Cd in ('SLIT','BAGM')"
         End If
 
-        'Response.Write(vSQL)
-
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
         da.Fill(ds, "tblItemDetails")
@@ -238,8 +233,6 @@ Partial Class warehouse
     Private Sub BtnSave_ServerClick(sender As Object, e As EventArgs) Handles BtnSave.Click
 
         Dim ItemCd As String = tblItemMaster.SelectedRow.Cells(2).Text
-        'Dim LotNo As String = tblItemOnhandDetails.SelectedRow.Cells(1).Text
-        'Dim Barcode As String = GenerateRandomBarcode(32)
         Dim BatchNo As String = Format(Now, "yyyyMMddHHmm")
 
         vSQL = "insert into prod_packinglist " _
@@ -321,7 +314,7 @@ Partial Class warehouse
         GetPackingList()
 
         ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Successfully saved');", True)
-        'Response.Write(vSQL)
+
     End Sub
     Private Sub AutoAddItem(pSQL As String, BatchNo As Int64, pMode As String)
 
@@ -345,7 +338,7 @@ Partial Class warehouse
         rs = cm.ExecuteReader
 
         SQLStr = "insert into prod_packinglist_details (BatchNo,JONO,CompletionTranId,Customer,CreatedBy,DateCreated,Remarks) values "
-        'Response.Write(pSQL & " x11")
+
 
         Do While rs.Read
             If pMode = "Add" Then
@@ -369,11 +362,8 @@ Partial Class warehouse
         c.Dispose()
         cm.Dispose()
 
-        'lblTotalPerItem.Text = "Total QTY per item code : " & GetRef(vSQL, 0)
-
     End Sub
     Private Sub tblGetPackingList_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles tblGetPackingList.RowEditing
-        'ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "$('#myModal').modal('show');", True)
         BtnSave.Visible = False
         BtnUpdate.Visible = True
     End Sub
@@ -446,11 +436,6 @@ Partial Class warehouse
         c.Dispose()
         cm.Dispose()
 
-
-
-
-        'lblTotalPerItem.Text = "Total QTY per item code : " & GetRef(vSQL, 0)
-
     End Sub
     Private Sub BtnSaveSeleteditem_Click(sender As Object, e As EventArgs) Handles BtnSaveSeleteditem.Click
         GetCompletionDetails()
@@ -467,6 +452,4 @@ Partial Class warehouse
         GetItemOnhandDetails("BAGM")
         ddlSource.SelectedValue = "BAGM"
     End Sub
-
-
 End Class
