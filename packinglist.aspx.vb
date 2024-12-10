@@ -360,7 +360,7 @@ Partial Class warehouse
 
         Loop
         rs.Close()
-        Response.Write(SQLStr)
+        'Response.Write(SQLStr)
 
         SQLStr = SQLStr.Trim().Remove(SQLStr.Length - 1)
         CreateRecord(SQLStr)
@@ -419,7 +419,7 @@ Partial Class warehouse
             & "TranType='COMPLETION' and IsDeleted is null " _
             & "order by DateCreated"
 
-        Response.Write(vSQL)
+        'Response.Write(vSQL)
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
         Do While rs.Read
