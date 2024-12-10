@@ -60,7 +60,7 @@ Partial Class warehouse
             & "FORMAT(ProdDate, 'MM/dd/yyyy') as ProdDate, " _
             & "FORMAT(DateCreated, 'MM/dd/yyyy') as DateCreated,PalletCnt,PalletItemCnt, " _
             & "CONVERT(varchar(10), PalletCnt)  + '/' +  " _
-            & "Convert(varchar(10), PalletItemCnt) As Pallet " _
+            & "Convert(varchar(10), PalletItemCnt) As Pallet, Source " _
             & "from prod_packinglist b " _
             & "where 1=1 " & vFilter & " order by ItemName"
 
@@ -415,10 +415,11 @@ Partial Class warehouse
                     & "where c.CompletionTranId=b.TranId and c.JONO=b.JONO and " _
                     & "BatchNo='" & tblGetPackingList.SelectedRow.Cells(1).Text & "') as AddedItem " _
             & "from prod_completion b " _
-            & "where JONO='" & tblGetPackingList.SelectedRow.Cells(2).Text & "' and Sect_Cd in ('SLIT','BAGM') and " _
+            & "where JONO='" & tblGetPackingList.SelectedRow.Cells(2).Text & "' and Sect_Cd='" & tblGetPackingList.SelectedRow.Cells(18).Text & "' and " _
             & "TranType='COMPLETION' and IsDeleted is null " _
             & "order by DateCreated"
 
+        Response.Write(vSQL)
         cm.CommandText = vSQL
         rs = cm.ExecuteReader
         Do While rs.Read

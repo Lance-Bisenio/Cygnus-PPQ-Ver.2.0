@@ -220,6 +220,8 @@
                             <asp:BoundField DataField="Pallet" HeaderText="Pallet">
                                 <ItemStyle />
                             </asp:BoundField>
+                            <asp:BoundField DataField="Source" HeaderText="Source"
+                                HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" ItemStyle-Width="80px" />
 
                             <%--
                             <asp:TemplateField>
