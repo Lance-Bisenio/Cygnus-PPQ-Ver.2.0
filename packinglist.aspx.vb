@@ -273,7 +273,7 @@ Partial Class warehouse
             Ctr = CInt(TxtPalletItemCnt.Text.Trim) * CInt(TxtPalletCnt.Text.Trim)
             vSQL = "select top " & Ctr & " TranId " _
                 & "from prod_completion " _
-                & "where JONO='" & TxtJO.Text.Trim & "' and Sect_Cd='" & ddlSource.SelectedValue & "' order by DateCreated"
+                & "where JONO='" & TxtJO.Text.Trim & "' and TranType='COMPLETION' and Sect_Cd='" & ddlSource.SelectedValue & "' order by DateCreated"
             AutoAddItem(vSQL, BatchNo, "Add")
 
         Catch ex As Exception
