@@ -132,7 +132,7 @@
                             <thead>
                                 <tr>
                                     <th class="bg-primary text-white"></th>
-                                    <th class="bg-primary text-white">BatchNo / RollNo</th>
+                                    <th class="bg-primary text-white">Roll No/Batch Number</th>
                                     <th class="bg-primary text-white">Gross Wt</th>
                                     <th class="bg-primary text-white">Core Wt</th>
                                     <th class="bg-primary text-white">Net Wt</th>

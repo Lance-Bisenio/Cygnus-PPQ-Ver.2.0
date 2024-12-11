@@ -295,7 +295,7 @@
                         <AlternatingRowStyle CssClass="" />
                     </asp:GridView>
                 </div>
-                <div class="p-2 flex-grow-1"> 
+                <div class="p-2 flex-grow-1">
                     <div class="d-flex pb-1">
                         <div class="mr-auto">
                             <h5>Completion List</h5>
@@ -303,12 +303,12 @@
                         <div class="">
                             <button id="btnSlit" runat="server" type="button" class="btn btn-warning btn-sm mt-2">
                                 SLITTING <span id="lblCtnComp1" runat="server" class="badge badge-danger">0</span>
-                            </button> 
+                            </button>
                             <button id="btnBag" runat="server" type="button" class="btn btn-warning btn-sm mt-2">
                                 BAG MAKING <span id="lblCtnComp2" runat="server" class="badge badge-danger">0</span>
-                            </button> 
+                            </button>
                         </div>
-                    </div> 
+                    </div>
                     <asp:GridView ID="tblItemDetails" runat="server" AllowPaging="True"
                         AutoGenerateColumns="False" Font-Size="Small"
                         CssClass="table table-bordered table-sm" PageSize="20">
@@ -330,6 +330,9 @@
                             <asp:BoundField DataField="ProcessDescr" HeaderText="Process Descr">
                                 <ItemStyle />
                             </asp:BoundField>
+                            <asp:BoundField DataField="BatchNo" HeaderText="BatchNo / RollNo">
+                                <ItemStyle CssClass="" />
+                            </asp:BoundField>
                             <asp:BoundField DataField="GrossWeight" HeaderText="Gross Weight">
                                 <ItemStyle CssClass="" />
                             </asp:BoundField>
@@ -339,9 +342,13 @@
                             <asp:BoundField DataField="NetWeight" HeaderText="Net Weight">
                                 <ItemStyle />
                             </asp:BoundField>
-                            <asp:BoundField DataField="BatchNo" HeaderText="BatchNo / RollNo">
+
+                            <asp:BoundField DataField="QTY" HeaderText="QTY">
                                 <ItemStyle CssClass="" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="TtlPCS" HeaderText="TtlPCS">
+                                <ItemStyle CssClass="" />
+                            </asp:BoundField> 
                             <asp:BoundField DataField="DateCreated" HeaderText="Completion Date">
                                 <ItemStyle CssClass="" />
                             </asp:BoundField>
@@ -376,11 +383,13 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Gross Weight</th>
-                                    <th>Core Weight</th>
-                                    <th>Net Weight</th>
                                     <th>BatchNo / RollNo</th>
-                                    <th>Completion Date</th>
+                                    <th>Gross W</th>
+                                    <th>Core W</th>
+                                    <th>Net W</th>
+                                    <th>QTY</th>
+                                    <th>Ttl PCS</th>
+                                    <th>Ttl PCS per Box</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -454,7 +463,7 @@
                             </div>
                             <div class="col-md-6">
                                 <small>Completion Source:</small>
-                                <asp:DropDownList ID="ddlSource" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList> 
+                                <asp:DropDownList ID="ddlSource" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
                             </div>
                             <div class="col-md-12">
                                 <small>Remarks:</small>

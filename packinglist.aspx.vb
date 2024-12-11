@@ -189,7 +189,7 @@ Partial Class warehouse
         c.ConnectionString = connStr
 
         vSQL = "select (select Descr from ref_item_process a where a.Proc_Cd=b.Proc_Cd) as ProcessDescr, " _
-            & "GrossWeight, CoreWeight, NetWeight, BatchNo, DateCreated " _
+            & "GrossWeight, CoreWeight, NetWeight, BatchNo, DateCreated, QTY, TtlPCS " _
             & "from prod_completion b " _
             & "where JONO='" & tblItemMaster.SelectedRow.Cells(2).Text & "' "
 
@@ -400,7 +400,7 @@ Partial Class warehouse
 
 
         vSQL = "select TranId, (select Descr from ref_item_process a where a.Proc_Cd=b.Proc_Cd) as ProcessDescr, " _
-            & "GrossWeight, CoreWeight, NetWeight, BatchNo, DateCreated, " _
+            & "GrossWeight, CoreWeight, NetWeight, BatchNo, DateCreated, TtlPcs, TtlPcsBox, Qty," _
             & "(select CompletionTranId from prod_packinglist_details c " _
                     & "where c.CompletionTranId=b.TranId and c.JONO=b.JONO and " _
                     & "BatchNo='" & tblGetPackingList.SelectedRow.Cells(1).Text & "') as AddedItem " _
@@ -415,11 +415,13 @@ Partial Class warehouse
         Do While rs.Read
             Complist += "<tr>" _
                 & "<td>" & Ctr & "</td>" _
+                & "<td>" & rs("BatchNo") & "</td>" _
                 & "<td>" & rs("GrossWeight") & "</td>" _
                 & "<td>" & rs("CoreWeight") & "</td>" _
                 & "<td>" & rs("NetWeight") & "</td>" _
-                & "<td>" & rs("BatchNo") & "</td>" _
-                & "<td>" & rs("DateCreated") & "</td>"
+                & "<td>" & rs("Qty") & "</td>" _
+                & "<td>" & rs("TtlPcs") & "</td>" _
+                & "<td>" & rs("TtlPcsBox") & "</td>"
 
             If IsDBNull(rs("AddedItem")) Then
                 Complist += "<td><input type='button' id='" & rs("TranId") & "' onclick='AddItem(" & rs("TranId") & ",this.value)' class='btn btn-info btn-sm' value='Add'></td>"
