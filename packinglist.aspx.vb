@@ -421,7 +421,8 @@ Partial Class warehouse
                 & "<td>" & rs("NetWeight") & "</td>" _
                 & "<td>" & rs("Qty") & "</td>" _
                 & "<td>" & rs("TtlPcs") & "</td>" _
-                & "<td>" & rs("TtlPcsBox") & "</td>"
+                & "<td>" & rs("TtlPcsBox") & "</td>" _
+                & "<td id='" & rs("BatchNo") & "'></td>"
 
             If IsDBNull(rs("AddedItem")) Then
                 Complist += "<td><input type='button' id='" & rs("TranId") & "' onclick='AddItem(" & rs("TranId") & ",this.value)' class='btn btn-info btn-sm' value='Add'></td>"

@@ -56,6 +56,42 @@
     </style>
 
     <script>
+        function PreparedBy() {
+            var tdID = $("#txtBthNumKey").val();
+            //alert("test1-tr" + tdID);
+            $("#" + tdID).html('YES');
+
+            $.post("packinglist_api.aspx",
+                {
+                    batchno: tdID,
+                    city: "Duckburg"
+                },
+                function (data, status) {
+                    $("#lblSearchMessage").fadeIn();
+                    $("#lblSearchMessage").removeClass();
+                    if (data == 0) {
+                        $("#lblSearchMessage").html('Item not found');
+                        $("#lblSearchMessage").addClass("pt-4 text-danger");
+                    } else {
+                        $("#lblSearchMessage").html('Success');
+                        $("#lblSearchMessage").addClass("pt-4 text-success");
+                    }
+                    $("#lblSearchMessage").fadeOut();
+                    
+                    //alert("Data: " + data + "\nStatus: " + status);
+                });
+
+        }
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                alert("test" + event.key);
+                return false;
+            }
+        }
+
+        
+
+
         function DelItem(Itemid) {
             alert("test1-tr" + Itemid);
 
@@ -74,9 +110,11 @@
                 $('#' + pId).removeClass('btn btn-danger btn-sm');
                 $('#' + pId).addClass('btn btn-info btn-sm');
                 $('#' + pId).val('Add');
+
             }
 
         }
+
         function dis_status(Val1) {
             alert('hi ' + Val1);
         }
@@ -112,6 +150,12 @@
                 });
             });
 
+            $('#txtBthNumKey').keypress(function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    PreparedBy();
+                }
+            });
         });
     </script>
 </head>
@@ -314,11 +358,6 @@
                         CssClass="table table-bordered table-sm" PageSize="20">
                         <Columns>
 
-                            <%--<asp:CommandField ButtonType="Button" ShowSelectButton="True">
-                                <ControlStyle CssClass="btn btn-primary btn-sm" />
-                                <ItemStyle CssClass="" Width="40px" />
-                            </asp:CommandField>--%>
-
                             <asp:TemplateField HeaderText="#" HeaderStyle-Width="30px">
                                 <ItemTemplate>
                                     <%# Container.DataItemIndex + 1 %>
@@ -348,12 +387,10 @@
                             </asp:BoundField>
                             <asp:BoundField DataField="TtlPCS" HeaderText="TtlPCS">
                                 <ItemStyle CssClass="" />
-                            </asp:BoundField> 
+                            </asp:BoundField>
                             <asp:BoundField DataField="DateCreated" HeaderText="Completion Date">
                                 <ItemStyle CssClass="" />
                             </asp:BoundField>
-
-
                         </Columns>
 
                         <SelectedRowStyle CssClass="table-info" />
@@ -379,7 +416,24 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <table class="table table-bordered table-sm table-striped small">
+                        <div class="col-12 bg-con">
+                            <div class="d-flex pb-1">
+
+                                <div class="col-7">
+                                    <h6>Search Batch Number:</h6>
+                                    <div class="input-group">
+                                        <input type="text" id="txtBthNumKey" class="form-control" placeholder="Scan or Enter Batch number" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success" type="button" onclick="PreparedBy()">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mr-auto col-5">
+                                     <h4 id="lblSearchMessage" class="pt-4"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-sm table-striped small mt-4">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -390,6 +444,7 @@
                                     <th>QTY</th>
                                     <th>Ttl PCS</th>
                                     <th>Ttl PCS per Box</th>
+                                    <th>Item Found?</th>
                                     <th></th>
                                 </tr>
                             </thead>
