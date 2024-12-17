@@ -403,7 +403,10 @@ Partial Class warehouse
             & "GrossWeight, CoreWeight, NetWeight, BatchNo, DateCreated, TtlPcs, TtlPcsBox, Qty," _
             & "(select CompletionTranId from prod_packinglist_details c " _
                     & "where c.CompletionTranId=b.TranId and c.JONO=b.JONO and " _
-                    & "BatchNo='" & tblGetPackingList.SelectedRow.Cells(1).Text & "') as AddedItem " _
+                    & "BatchNo='" & tblGetPackingList.SelectedRow.Cells(1).Text & "') as AddedItem, " _
+            & "(select IsAvailable from prod_packinglist_details c " _
+                    & "where c.CompletionTranId=b.TranId and c.JONO=b.JONO and " _
+                    & "BatchNo='" & tblGetPackingList.SelectedRow.Cells(1).Text & "') as IsAvailable " _
             & "from prod_completion b " _
             & "where JONO='" & tblGetPackingList.SelectedRow.Cells(2).Text & "' and Sect_Cd='" & tblGetPackingList.SelectedRow.Cells(18).Text & "' and " _
             & "TranType='COMPLETION' and IsDeleted is null " _
@@ -421,13 +424,19 @@ Partial Class warehouse
                 & "<td>" & rs("NetWeight") & "</td>" _
                 & "<td>" & rs("Qty") & "</td>" _
                 & "<td>" & rs("TtlPcs") & "</td>" _
-                & "<td>" & rs("TtlPcsBox") & "</td>" _
-                & "<td id='" & rs("BatchNo") & "'></td>"
+                & "<td>" & rs("TtlPcsBox") & "</td>"
+
+            If Not IsDBNull(rs("IsAvailable")) Then
+                Complist += "<td id='" & rs("BatchNo") & "'>" & IIf(rs("IsAvailable") = 1, "YES", "") & "</td>"
+            Else
+                Complist += "<td id='" & rs("BatchNo") & "'></td>"
+            End If
+
 
             If IsDBNull(rs("AddedItem")) Then
-                Complist += "<td><input type='button' id='" & rs("TranId") & "' onclick='AddItem(" & rs("TranId") & ",this.value)' class='btn btn-info btn-sm' value='Add'></td>"
+                Complist += "<td><input type='button' id='btn" & rs("BatchNo") & "' onclick='AddItem(this.id,this.value)' class='btn btn-info btn-sm' value='Add'></td>"
             Else
-                Complist += "<td><input type='button' id='" & rs("TranId") & "' onclick='AddItem(" & rs("TranId") & ",this.value)' class='btn btn-danger btn-sm' value='Del'></td>"
+                Complist += "<td><input type='button' id='btn" & rs("BatchNo") & "' onclick='AddItem(this.id,this.value)' class='btn btn-danger btn-sm' value='Del'></td>"
             End If
 
             Complist += "</tr>"

@@ -64,7 +64,7 @@
             $.post("packinglist_api.aspx",
                 {
                     batchno: tdID,
-                    city: "Duckburg"
+                    temp: "Temp"
                 },
                 function (data, status) {
                     $("#lblSearchMessage").fadeIn();
@@ -75,22 +75,17 @@
                     } else {
                         $("#lblSearchMessage").html('Success');
                         $("#lblSearchMessage").addClass("pt-4 text-success");
+
+                        $('#btn' + tdID).removeClass('btn btn-info btn-sm');
+                        $('#btn' + tdID).addClass('btn btn-danger btn-sm');
+                        $('#btn' + tdID).val('Del');
                     }
                     $("#lblSearchMessage").fadeOut();
-                    
+
                     //alert("Data: " + data + "\nStatus: " + status);
                 });
 
         }
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                alert("test" + event.key);
-                return false;
-            }
-        }
-
-        
-
 
         function DelItem(Itemid) {
             alert("test1-tr" + Itemid);
@@ -100,9 +95,8 @@
             });
         }
 
-        function AddItem(pId, btnName) {
-
-            if (btnName == 'Add') {
+        function AddItem(pId, pName) { 
+            if (pName == 'Add') {
                 $('#' + pId).removeClass('btn btn-info btn-sm');
                 $('#' + pId).addClass('btn btn-danger btn-sm');
                 $('#' + pId).val('Del');
@@ -110,9 +104,7 @@
                 $('#' + pId).removeClass('btn btn-danger btn-sm');
                 $('#' + pId).addClass('btn btn-info btn-sm');
                 $('#' + pId).val('Add');
-
-            }
-
+            } 
         }
 
         function dis_status(Val1) {
@@ -420,7 +412,7 @@
                             <div class="d-flex pb-1">
 
                                 <div class="col-7">
-                                    <h6>Search Batch Number:</h6>
+                                    <h6>Packing List Preparation:</h6>
                                     <div class="input-group">
                                         <input type="text" id="txtBthNumKey" class="form-control" placeholder="Scan or Enter Batch number" />
                                         <div class="input-group-append">
@@ -429,7 +421,7 @@
                                     </div>
                                 </div>
                                 <div class="mr-auto col-5">
-                                     <h4 id="lblSearchMessage" class="pt-4"></h4>
+                                    <h4 id="lblSearchMessage" class="pt-4"></h4>
                                 </div>
                             </div>
                         </div>
