@@ -64,7 +64,8 @@
             $.post("packinglist_api.aspx",
                 {
                     batchno: tdID,
-                    temp: "Temp"
+                    jono: '<%= tblGetPackingList.SelectedRow.Cells(2).Text %>',
+                    source: '<%= tblGetPackingList.SelectedRow.Cells(18).Text %>' 
                 },
                 function (data, status) {
                     $("#lblSearchMessage").fadeIn();
@@ -72,7 +73,8 @@
                     if (data == 0) {
                         $("#lblSearchMessage").html('Item not found');
                         $("#lblSearchMessage").addClass("pt-4 text-danger");
-                    } else {
+                    }
+                    if (data == 1) {
                         $("#lblSearchMessage").html('Success');
                         $("#lblSearchMessage").addClass("pt-4 text-success");
 
@@ -84,7 +86,6 @@
 
                     //alert("Data: " + data + "\nStatus: " + status);
                 });
-
         }
 
         function DelItem(Itemid) {
@@ -105,6 +106,16 @@
                 $('#' + pId).addClass('btn btn-info btn-sm');
                 $('#' + pId).val('Add');
             } 
+
+            $.post("packinglist_api.aspx",
+                {
+                    batchno: pId,
+                    trantype: pName
+                },
+                function (data, status) {                     
+                    alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status);
+                });
+
         }
 
         function dis_status(Val1) {
