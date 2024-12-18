@@ -41,6 +41,22 @@ Partial Class warehouse
         GetPackingList()
 
     End Sub
+    Function getJONO() As String
+        Dim JONO As String = ""
+        Try
+            JONO = tblGetPackingList.SelectedRow.Cells(2).Text
+        Catch ex As Exception
+        End Try
+        Return JONO
+    End Function
+    Function getSource() As String
+        Dim Source As String = ""
+        Try
+            Source = tblGetPackingList.SelectedRow.Cells(18).Text
+        Catch ex As Exception
+        End Try
+        Return Source
+    End Function
 
     Private Sub GetPackingList()
         Dim c As New SqlClient.SqlConnection
@@ -52,7 +68,7 @@ Partial Class warehouse
 
         c.ConnectionString = connStr
 
-        vSQL = "select TranId, BatchNo,JONO, CustomerId,JONO,Item_Cd CreatedBy, Remarks, CoreWeight, NetWeight, GrossWeight, " _
+        vSQL = "select TranId, BatchNo, CustomerId, JONO, Item_Cd, CreatedBy, Remarks, CoreWeight, NetWeight, GrossWeight, " _
             & "(select Descr + ' ' + Descr1  from item_master a where a.Item_Cd=b.Item_Cd) as ItemName, " _
             & "(select Descr from ref_item_customer a where a.Customer_Cd=b.CustomerId) as CustName, " _
             & "PONO,FORMAT(PODate, 'MM/dd/yyyy') as PODate, " _
@@ -82,6 +98,7 @@ Partial Class warehouse
     End Sub
     Private Sub tblGetPackingList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tblGetPackingList.SelectedIndexChanged
         Session("PListID") = tblGetPackingList.SelectedRow.Cells(1).Text
+        Session("CustomerId") = tblGetPackingList.SelectedRow.Cells(19).Text
 
         LblCustName.Text = tblGetPackingList.SelectedRow.Cells(3).Text
         LblItemName.Text = tblGetPackingList.SelectedRow.Cells(4).Text
@@ -427,7 +444,7 @@ Partial Class warehouse
                 & "<td>" & rs("TtlPcsBox") & "</td>"
 
             If Not IsDBNull(rs("IsAvailable")) Then
-                Complist += "<td id='" & rs("BatchNo") & "'>" & IIf(rs("IsAvailable") = 1, "YES", "") & "</td>"
+                Complist += "<td id='" & rs("BatchNo") & "' class='text-success font-weight-bold'>" & IIf(rs("IsAvailable") = 1, "YES", "") & "</td>"
             Else
                 Complist += "<td id='" & rs("BatchNo") & "'></td>"
             End If

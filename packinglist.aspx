@@ -58,14 +58,19 @@
     <script>
         function PreparedBy() {
             var tdID = $("#txtBthNumKey").val();
-            //alert("test1-tr" + tdID);
-            $("#" + tdID).html('YES');
+
+            var cjono = "<%= getJONO()  %>";
+            var csource = "<%= getSource()  %>";
+
+            $("#" + tdID).html('YES'); 
+            $("#" + tdID).removeClass();
+            $("#" + tdID).addClass("text-success font-weight-bold");
 
             $.post("packinglist_api.aspx",
                 {
                     batchno: tdID,
-                    jono: '<%= tblGetPackingList.SelectedRow.Cells(2).Text %>',
-                    source: '<%= tblGetPackingList.SelectedRow.Cells(18).Text %>' 
+                    jono: cjono,
+                    source: csource
                 },
                 function (data, status) {
                     $("#lblSearchMessage").fadeIn();
@@ -83,20 +88,15 @@
                         $('#btn' + tdID).val('Del');
                     }
                     $("#lblSearchMessage").fadeOut();
-
                     //alert("Data: " + data + "\nStatus: " + status);
                 });
         }
-
-        function DelItem(Itemid) {
-            alert("test1-tr" + Itemid);
-
-            $.post("warehouse_ajax.aspx", { ReleasingDelItem: Itemid }, function (result) {
-                $("#tr" + Itemid).remove();
-            });
-        }
-
+         
         function AddItem(pId, pName) { 
+            var cjono = "<%= getJONO()  %>";
+            var csource = "<%= getSource()  %>";
+            
+
             if (pName == 'Add') {
                 $('#' + pId).removeClass('btn btn-info btn-sm');
                 $('#' + pId).addClass('btn btn-danger btn-sm');
@@ -105,23 +105,21 @@
                 $('#' + pId).removeClass('btn btn-danger btn-sm');
                 $('#' + pId).addClass('btn btn-info btn-sm');
                 $('#' + pId).val('Add');
+                $("#" + pId.substring(3, pId.length)).html('');
             } 
 
             $.post("packinglist_api.aspx",
                 {
-                    batchno: pId,
-                    trantype: pName
+                    batchno: pId.substring(3, pId.length),
+                    trantype: pName,
+                    jono: cjono,
+                    source: csource
                 },
                 function (data, status) {                     
-                    alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status);
+                    alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status + "\nID: " + pId.substring(3, pId.length));
                 });
-
         }
-
-        function dis_status(Val1) {
-            alert('hi ' + Val1);
-        }
-
+         
         function ViewReport() {
             var myWindow = window.open("packinglist_view.aspx", "MsgWindow", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=200,width=1100,height=900");
             //myWindow.document.write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p>");
@@ -269,7 +267,9 @@
                             </asp:BoundField>
                             <asp:BoundField DataField="Source" HeaderText="Source"
                                 HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" ItemStyle-Width="80px" />
-
+                            <asp:BoundField DataField="CustomerId" HeaderText="CustomerId"
+                                HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" ItemStyle-Width="80px" />
+                            
                             <%--
                             <asp:TemplateField>
                                 <ItemTemplate>
@@ -406,7 +406,6 @@
             </div>
         </section>
 
-
         <div id="AddItemModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-size">
                 <div class="modal-content">
@@ -427,7 +426,7 @@
                                     <div class="input-group">
                                         <input type="text" id="txtBthNumKey" class="form-control" placeholder="Scan or Enter Batch number" />
                                         <div class="input-group-append">
-                                            <button class="btn btn-success" type="button" onclick="PreparedBy()">Search</button>
+                                            <button class="btn btn-success btn-sm" type="button" onclick="PreparedBy()">Search</button>
                                         </div>
                                     </div>
                                 </div>
