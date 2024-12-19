@@ -116,7 +116,7 @@
                     source: csource
                 },
                 function (data, status) {                     
-                    alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status + "\nID: " + pId.substring(3, pId.length));
+                    //alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status + "\nID: " + pId.substring(3, pId.length));
                 });
         }
          
@@ -486,11 +486,11 @@
                             </div>
                             <div class="col-md-6">
                                 <small>Job Order Number:</small>
-                                <asp:TextBox ID="TxtJO" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+                                <asp:TextBox ID="TxtJO" runat="server" CssClass="form-control form-control-sm border-danger"></asp:TextBox>
                             </div>
                             <div class="col-md-6">
                                 <small>Job Order Date:</small>
-                                <asp:TextBox ID="TxtJODate" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+                                <asp:TextBox ID="TxtJODate" runat="server" CssClass="form-control form-control-sm border-danger"></asp:TextBox>
                             </div>
                             <div class="col-md-6">
                                 <small>Purchase Order Number:</small>

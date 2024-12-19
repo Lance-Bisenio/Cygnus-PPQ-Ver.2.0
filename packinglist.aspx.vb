@@ -104,11 +104,11 @@ Partial Class warehouse
         LblItemName.Text = tblGetPackingList.SelectedRow.Cells(4).Text
         TxtJO.Text = tblGetPackingList.SelectedRow.Cells(2).Text
 
-        TxtPO.Text = tblGetPackingList.SelectedRow.Cells(9).Text
-        TxtPODate.Text = tblGetPackingList.SelectedRow.Cells(10).Text
-        TxtDelDate.Text = tblGetPackingList.SelectedRow.Cells(11).Text
-        TxtProdDate.Text = tblGetPackingList.SelectedRow.Cells(12).Text
-        TxtRemarks.Text = tblGetPackingList.SelectedRow.Cells(13).Text
+        TxtPO.Text = tblGetPackingList.SelectedRow.Cells(9).Text.Replace("&nbsp;", " ")
+        TxtPODate.Text = tblGetPackingList.SelectedRow.Cells(10).Text.Replace("&nbsp;", " ").Replace("01/01/1900", " ")
+        TxtDelDate.Text = tblGetPackingList.SelectedRow.Cells(11).Text.Replace("&nbsp;", " ").Replace("01/01/1900", " ")
+        TxtProdDate.Text = tblGetPackingList.SelectedRow.Cells(12).Text.Replace("&nbsp;", " ").Replace("01/01/1900", " ")
+        TxtRemarks.Text = tblGetPackingList.SelectedRow.Cells(13).Text.Replace("&nbsp;", " ")
         TxtPalletCnt.Text = tblGetPackingList.SelectedRow.Cells(14).Text
         TxtPalletItemCnt.Text = tblGetPackingList.SelectedRow.Cells(15).Text
 
@@ -448,7 +448,6 @@ Partial Class warehouse
             Else
                 Complist += "<td id='" & rs("BatchNo") & "'></td>"
             End If
-
 
             If IsDBNull(rs("AddedItem")) Then
                 Complist += "<td><input type='button' id='btn" & rs("BatchNo") & "' onclick='AddItem(this.id,this.value)' class='btn btn-info btn-sm' value='Add'></td>"

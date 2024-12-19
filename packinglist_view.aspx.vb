@@ -8,6 +8,8 @@ Partial Class packinglist_view
     Dim vSQL As String = ""
     Dim c As New SqlClient.SqlConnection
     Public vData As String = ""
+    Dim Pallet As Integer = 0
+    Dim PalletItem As Integer = 0
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -42,7 +44,7 @@ Partial Class packinglist_view
             Exit Sub
         End Try
 
-        vSQL = "select PODate, PONO, DeliveryDate, Item_Cd,JONO,JODate," _
+        vSQL = "select PODate, PONO, DeliveryDate, Item_Cd,JONO,JODate, PalletCnt, PalletItemCnt," _
             & "(select SalesOrderNo from jo_header where JobOrderNo=z.JONO) as SONO, " _
             & "(select StartDate from jo_header where JobOrderNo=z.JONO) as StartDate, " _
             & "(select Descr + ' ' + Descr1  from item_master a where a.Item_Cd= z.Item_Cd) as ItemName,  " _
@@ -71,6 +73,8 @@ Partial Class packinglist_view
             lblPODate.InnerText = IIf(IsDBNull(rs("PODate")), "", rs("PODate"))
             lblDelDate.InnerText = IIf(IsDBNull(rs("DeliveryDate")), "", rs("DeliveryDate"))
 
+            Pallet = IIf(IsDBNull(rs("PalletCnt")), "", rs("PalletCnt"))
+            PalletItem = IIf(IsDBNull(rs("PalletItemCnt")), "", rs("PalletItemCnt"))
         End If
         rs.Close()
 
@@ -87,7 +91,8 @@ Partial Class packinglist_view
         Dim cm As New SqlClient.SqlCommand
         Dim rs As SqlClient.SqlDataReader
         Dim SQLStr As String = ""
-
+        Dim PalletVal As Integer = 1
+        Dim CtrItem As Integer = 1
 
         c.ConnectionString = connStr
 
@@ -110,15 +115,27 @@ Partial Class packinglist_view
 
         Do While rs.Read
             vData += "<tr>" _
-               & "<td>" & Ctr & "</td>" _
+               & "<td style='width: 30px'>" & Ctr & "</td>" _
                & "<td>" & rs("BatchNo") & "</td>" _
                & "<td>" & rs("CoreWeight") & "</td>" _
                & "<td>" & rs("NetWeight") & "</td>" _
                & "<td>" & rs("GrossWeight") & "</td>" _
                & "<td>" & rs("TtlPcs") & "</td>" _
-               & "<td>" & rs("Qty") & "</td>" _
-               & "<td>" & IIf(rs("UOM") = "", "KGS", rs("UOM")) & "</td>" _
-               & "<td> </td>"
+               & "<td>" & FormatNumber(rs("Qty"), "000") & "</td>" _
+               & "<td>" & IIf(rs("UOM") = "", "KGS", rs("UOM")) & "</td>"
+
+            If CtrItem > PalletItem Then
+                PalletVal += 1
+                CtrItem = 1
+            End If
+
+            If PalletItem = 0 Then
+                vData += "<td style='width: 70px'>1</td>"
+            Else
+                vData += "<td style='width: 70px'>" & PalletVal & "</td>"
+            End If
+
+            CtrItem += 1
 
             vData += "</tr>"
             Ctr += 1
