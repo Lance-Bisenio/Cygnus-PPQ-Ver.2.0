@@ -62,7 +62,7 @@
             var cjono = "<%= getJONO()  %>";
             var csource = "<%= getSource()  %>";
 
-            $("#" + tdID).html('YES'); 
+            $("#" + tdID).html('YES');
             $("#" + tdID).removeClass();
             $("#" + tdID).addClass("text-success font-weight-bold");
 
@@ -91,11 +91,11 @@
                     //alert("Data: " + data + "\nStatus: " + status);
                 });
         }
-         
-        function AddItem(pId, pName) { 
+
+        function AddItem(pId, pName) {
             var cjono = "<%= getJONO()  %>";
             var csource = "<%= getSource()  %>";
-            
+
 
             if (pName == 'Add') {
                 $('#' + pId).removeClass('btn btn-info btn-sm');
@@ -106,7 +106,7 @@
                 $('#' + pId).addClass('btn btn-info btn-sm');
                 $('#' + pId).val('Add');
                 $("#" + pId.substring(3, pId.length)).html('');
-            } 
+            }
 
             $.post("packinglist_api.aspx",
                 {
@@ -115,11 +115,11 @@
                     jono: cjono,
                     source: csource
                 },
-                function (data, status) {                     
+                function (data, status) {
                     //alert("Data: " + data + "\nParam:" + pName + "\nStatus: " + status + "\nID: " + pId.substring(3, pId.length));
                 });
         }
-         
+
         function ViewReport() {
             var myWindow = window.open("packinglist_view.aspx", "MsgWindow", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=200,width=1100,height=900");
             //myWindow.document.write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p>");
@@ -169,13 +169,37 @@
                     <div class="container-fluid">
                         <div class="d-flex">
                             <div class="p-2 col-3 flex-fill">
+                                
+                                <small>Enter Packing List Date Created:</small>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control form-control-sm" id="txtPKLFromDate" runat="server" placeholder="mm/dd/yyyy" name="date" />
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control form-control-sm" id="txtPKLToDate" runat="server" placeholder="mm/dd/yyyy" name="date" />
+                                    </div>
+                                </div>
+                                <small>Enter Job Order Date Range:</small>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control form-control-sm" id="txtJOFromDate" runat="server" placeholder="mm/dd/yyyy" name="date" />
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control form-control-sm" id="txtJOToDate" runat="server" placeholder="mm/dd/yyyy" name="date" />
+                                    </div>
+                                </div>
+                                <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm mt-2" runat="server" Text="Search" />
+                            </div>
+                            <div class="p-2 col-3 flex-fill">
+
+
                                 <small>Quick Search (Enter Job Order Numner):</small>
                                 <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
                                 <small>Customer List:</small>
                                 <asp:DropDownList ID="DDLCustList" runat="server" Width="" CssClass="form-control form-control-sm"></asp:DropDownList>
-                                <asp:Button ID="btnSearch" CssClass="btn btn-primary btn-sm mt-2" runat="server" Text="Search" />
+                                
                             </div>
-                            <div class="p-2 flex-fill"></div>
+
                         </div>
                     </div>
 
@@ -269,7 +293,7 @@
                                 HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" ItemStyle-Width="80px" />
                             <asp:BoundField DataField="CustomerId" HeaderText="CustomerId"
                                 HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" ItemStyle-Width="80px" />
-                            
+
                             <%--
                             <asp:TemplateField>
                                 <ItemTemplate>

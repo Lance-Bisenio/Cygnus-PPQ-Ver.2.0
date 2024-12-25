@@ -57,7 +57,6 @@ Partial Class warehouse
         End Try
         Return Source
     End Function
-
     Private Sub GetPackingList()
         Dim c As New SqlClient.SqlConnection
         Dim da As SqlClient.SqlDataAdapter
@@ -67,6 +66,24 @@ Partial Class warehouse
         Dim vSQL As String = ""
 
         c.ConnectionString = connStr
+
+        If txtPKLFromDate.Value.Trim <> "" And txtPKLToDate.Value.Trim <> "" Then
+            If IsDate(txtPKLFromDate.Value.Trim) And IsDate(txtPKLToDate.Value.Trim) Then
+                vFilter += "and DateCreated between '" & txtPKLFromDate.Value.Trim & " 00:00' and '" & txtPKLToDate.Value.Trim & " 23:59' "
+            Else
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Invalid packing list date range');", True)
+            End If
+        End If
+
+
+        If txtSearch.Text.Trim <> "" Then
+            vFilter += "and JONO='" & txtSearch.Text.Trim & "' "
+        End If
+
+        If DDLCustList.SelectedValue <> "All" Then
+            vFilter += "and CustomerId='" & DDLCustList.SelectedValue & "' "
+        End If
+
 
         vSQL = "select TranId, BatchNo, CustomerId, JONO, Item_Cd, CreatedBy, Remarks, CoreWeight, NetWeight, GrossWeight, " _
             & "(select Descr + ' ' + Descr1  from item_master a where a.Item_Cd=b.Item_Cd) as ItemName, " _
@@ -79,8 +96,7 @@ Partial Class warehouse
             & "Convert(varchar(10), PalletItemCnt) As Pallet, Source " _
             & "from prod_packinglist b " _
             & "where 1=1 " & vFilter & " order by ItemName"
-
-
+        Response.Write(vSQL)
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
         da.Fill(ds, "tblGetPackingList")
@@ -128,6 +144,15 @@ Partial Class warehouse
         Dim vTableName As String = ""
         Dim vSQL As String = ""
 
+        If txtJOFromDate.Value.Trim <> "" And txtJOToDate.Value.Trim <> "" Then
+            If IsDate(txtJOFromDate.Value.Trim) And IsDate(txtJOToDate.Value.Trim) Then
+                vFilter += "and DateCreated between '" & txtJOFromDate.Value.Trim & " 00:00' and '" & txtJOToDate.Value.Trim & " 23:59' "
+            Else
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "Script", "alert('Invalid job order date range');", True)
+            End If
+        End If
+
+
         If txtSearch.Text <> "" Then
             vFilter += "and JobOrderNo like '%" & txtSearch.Text & "%' "
         End If
@@ -143,7 +168,9 @@ Partial Class warehouse
             & "(select Descr from ref_item_customer where Customer_Cd=Cust_Cd) as CustName, Cust_Cd, " _
             & "SalesOrderNo " _
             & "From jo_header b " _
-            & "where JobOrderNo in (select JONO from prod_completion where JobOrderNo=JONO and Sect_Cd in ('SLIT','BAGM') ) " & vFilter & " order by ItemName"
+            & "where JobOrderNo in " _
+            & "(select JONO from prod_completion where JobOrderNo=JONO and Sect_Cd in ('SLIT','BAGM') ) " & vFilter _
+            & " order by ItemName"
 
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
@@ -215,9 +242,10 @@ Partial Class warehouse
         ElseIf pFilter = "BAGM" Then
             vSQL += "and Sect_Cd='BAGM'"
         Else
-            vSQL += "and Sect_Cd in ('SLIT','BAGM')"
+            vSQL += "and Sect_Cd in ('SLIT','BAGM') "
         End If
 
+        vSQL += "order by TranId"
         da = New SqlClient.SqlDataAdapter(vSQL, c)
 
         da.Fill(ds, "tblItemDetails")
@@ -427,7 +455,7 @@ Partial Class warehouse
             & "from prod_completion b " _
             & "where JONO='" & tblGetPackingList.SelectedRow.Cells(2).Text & "' and Sect_Cd='" & tblGetPackingList.SelectedRow.Cells(18).Text & "' and " _
             & "TranType='COMPLETION' and IsDeleted is null " _
-            & "order by DateCreated"
+            & "order by TranId, DateCreated"
 
         'Response.Write(vSQL)
         cm.CommandText = vSQL
